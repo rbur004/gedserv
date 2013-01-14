@@ -1,0 +1,11 @@
+*.o
+*.a
+*.ged
+gedserv
+gedserv.active
+gedserv.old
+.finderinfo/
+.resource/
+.yardoc
+.yard
+*.core
