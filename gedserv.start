@@ -1,2 +1,14 @@
 #!/bin/sh
-./gedserv.active /services/www/burrowes.org/FamilyTree/burrowes.ged /services/www/burrowes.org/FamilyTree/Burrowes2.ged /services/www/burrowes.org/FamilyTree/Borrowes.ged /services/www/burrowes.org/FamilyTree/Forte.ged > /dev/null &
+GEDCOM_BASE=/usr/local/gedcom
+if [ -e /tmp/gedserv.pid ] ; then
+  cpid=`/bin/cat /tmp/gedserv.pid`
+  if [ "${cpid}" -gt 100 ] ; then
+    kill $cpid
+  fi
+fi
+
+/usr/local/bin/gedserv.active ${GEDCOM_BASE}burrowes.ged ${GEDCOM_BASE}Burrowes2.ged ${GEDCOM_BASE}Borrowes.ged ${GEDCOM_BASE}Forte.ged ${GEDCOM_BASE}Ellis.ged  > /tmp/ged.out &
+
+if [ "$?" -eq "0" ]; then
+  echo $! > /tmp/gedserv.pid
+fi

@@ -86,7 +86,7 @@ char *p;
 int  on = 1;
 int result = 0;
 struct sockaddr_in address;
-size_t addr_len;
+socklen_t addr_len;
 int net_A, net_B, net_C;
 
 	time(&start_time);
@@ -119,7 +119,7 @@ int net_A, net_B, net_C;
 		
     for(;run == 1;)
     {
-	addr_len = sizeof(address);
+	addr_len = (socklen_t)sizeof(address);
 		if(do_reload)
 		{
 			do_reload = 0;

@@ -17,7 +17,6 @@
 #include "btree.h"
 #include "chart.h"
 #include "pathnames.h"
-#include "socket.h"
 
 void init_gedlists()
 {
@@ -423,7 +422,7 @@ int lineno = 1;	//Line number for error reporting
 			}
 			else
 			{
-				printf("Skipping: No level, line %ld: %s\n", lineno, l);
+				printf("Skipping: No level, line %d: %s\n", lineno, l);
 			}
 		}
 		else
@@ -1599,7 +1598,7 @@ time_t mod_time;
 		}
 		else
 		{
-			printf("Unable to open file %s\n",Ged_File[i]);
+			printf("Unable to open file %s\n",Ged_File[i].name);
 			return;
 		}
 		i++;
@@ -1617,7 +1616,7 @@ time_t mod_time;
 			num_files++;
 		}
 		else
-			printf("Unable to open file %s: Skipping\n",Ged_File[i]);
+			printf("Unable to open file %s: Skipping\n",Ged_File[i].name);
 		i++;
 	}
 	Data_buffer[file_size] = '\0';
@@ -1642,28 +1641,5 @@ ged_type *g, *n;
 	
 	load_gedcom();
 	create_index();
-}
-	
-int main(int argc , char **argv)
-{
-int i;
-	if(argc == 1)
-		exit(0);
-		
-	Ged_File = (t_gedfile *) calloc( argc, sizeof(t_gedfile));
-	for(i = 1; i < argc; i++)
-	{
-		Ged_File[i-1].name = argv[i];
-		Ged_File[i-1].length = 0;
-	}
-	Ged_File[i-1].name = 0;
-	Ged_File[i-1].length = 0;
-	
-	load_gedcom();
-	create_index();
-	display_stats();
-	main_loop();
-
-	return 0;
 }
 

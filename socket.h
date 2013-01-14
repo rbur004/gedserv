@@ -1,5 +1,6 @@
 #ifndef SOCKET_H
 #define SOCKET_H
+#include <stdio.h>
 
 int main_loop();
 void send_error(int sd, int error);
