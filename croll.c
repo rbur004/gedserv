@@ -932,29 +932,33 @@ ged_type *repo;
 		fprintf(fp, "<a href=\"/ruby/gedrelay.rbx?type=repo&target=%s\"><b>Source</b></a>", repo->data);
 }
 
-void source_given(FILE *fp, ged_type *record)
+static void source_body(FILE *fp, ged_type *source)
 {
 ged_type *g;
+int t;
+	if(*source->data == '@')
+		fprintf(fp, "&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"/ruby/gedrelay.rbx?type=sour&target=%s\"><b>Source</b></a>", source->data);
+	else
+	{
+		fprintf(fp, "<br><ul><b>Source.</b>%s\n", source->data);
+		for(g = source->next; g && g != &all && g->level > source->level && ((t = type_to_num(g->type)) == CONT || t == CONC ); g = g->next)
+			if(t == CONC)
+				fprintf(fp, "%s\n", g->data);
+			else
+				fprintf(fp, "<BR>%s\n", g->data);
+		fprintf(fp, "<br></ul>\n");
+	}
+}
+
+void source_given(FILE *fp, ged_type *record)
+{
 ged_type *source;
 
 	if(source = find_type(record, SOUR))
 	{
-		if(*source->data == '@')
-			fprintf(fp, " <a href=\"/ruby/gedrelay.rbx?type=sour&target=%s\"><b>Source</b></a>", source->data);
-		else
-		{
-			fprintf(fp, "<p><b>Source.</b> %s\n", source->data);
-			for(g = source->next; g && g != &all && g->level > source->level && type_to_num(g->type) == CONT; g = g->next)
-				fprintf(fp, "%s\n", g->data);
-				fprintf(fp, "<br>\n");
-			while(source = find_next_this_type(record, source))
-			{
-				fprintf(fp, "<p><b>Source.</b> %s\n", source->data);
-				for(g = source->next; g && g != &all && g->level > source->level && type_to_num(g->type) == CONT; g = g->next)
-					fprintf(fp, "%s\n", g->data);
-				fprintf(fp, "<br></p>\n");
-			}
-		}
+		source_body(fp,source);
+		while(source = find_next_this_type(record, source))
+			source_body(fp,source);
 	}
 }
 
@@ -971,53 +975,39 @@ ged_type *resn;
 		return 0;
 }
 
+static void note_body(FILE *fp, ged_type *note, int indent)
+{
+ged_type *g;
+int t;
+	if(isPrivate(note) == 0)
+	{
+		if(indent)
+			fprintf(fp, "<ul>");
+		else
+			fprintf(fp, "<p>");
+		fprintf(fp, "<b>Nb.</b> %s\n", note->data);
+		for(g = note->next; g && g != &all && g->level > note->level && ((t = type_to_num(g->type)) == CONT || t == CONC ) ; g = g->next)
+			if(t == CONC)
+				fprintf(fp, "%s\n", g->data);
+			else
+				fprintf(fp, "<BR>%s\n", g->data);
+		source_given(fp, note);
+		fprintf(fp, "<br>\n");
+		if(indent)
+			fprintf(fp, "</ul>");
+	}
+}
+
 //Nb. NOTE records marked with "RESN private" will not be displayed
 void dump_notes(FILE *fp, ged_type *record, int indent)
 {
-ged_type *g;
 ged_type *note;
-int t;
 
 	if(note = find_type(record, NOTE))
 	{
-		if(isPrivate(note) == 0)
-		{
-			if(indent)
-				fprintf(fp, "<ul>");
-			else
-				fprintf(fp, "<p>");
-			fprintf(fp, "<b>Nb.</b> %s\n", note->data);
-			for(g = note->next; g && g != &all && g->level > note->level && ((t = type_to_num(g->type)) == CONT || t == CONC ) ; g = g->next)
-				if(t == CONC)
-					fprintf(fp, "%s\n", g->data);
-				else
-					fprintf(fp, "<BR>%s\n", g->data);
-			source_given(fp, note);
-			fprintf(fp, "<br>\n");
-			if(indent)
-				fprintf(fp, "</ul>");
-		}
+		note_body(fp, note, indent);
 		while(note = find_next_this_type(record, note))
-		{
-			if(isPrivate(note) == 0)
-			{
-				if(indent)
-					fprintf(fp, "<ul>");
-				else
-					fprintf(fp, "<p>");
-				
-				fprintf(fp, "<p><b>Nb.</b> %s\n", note->data);
-				for(g = note->next; g && g != &all && g->level > note->level && ((t = type_to_num(g->type)) == CONT || t == CONC ) ; g = g->next)
-					if(t == CONC)
-						fprintf(fp, "%s\n", g->data);
-					else
-						fprintf(fp, "<BR>%s\n", g->data);
-				source_given(fp, note);
-				fprintf(fp, "<br></p>\n");
-				if(indent)
-					fprintf(fp, "</ul>");
-			}
-		}
+			note_body(fp, note, indent);
 	}
 }
 
@@ -1117,7 +1107,7 @@ int mcount;
 			if(plac = find_type(chr, PLAC))
 				fprintf(fp, " <b>at</b> %s", plac->data);
 			source_given(fp, chr);
-			dump_notes(fp, chr,1 );
+			dump_notes(fp, chr, 1 );
 		}
 		if(deat = find_type(indi, DEAT))
 		{
@@ -1191,7 +1181,7 @@ int mcount;
 		}
 		fprintf(fp, "<br>");
 		source_given(fp, indi);
-		dump_notes(fp, indi, 0);
+		dump_notes(fp, indi, 1);
 		fprintf(fp, "</dl>\n");
 	}
 }
