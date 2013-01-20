@@ -224,15 +224,23 @@ char buff2[128];
 		
     	if(rt->processed == pass)
 		{	//A loop has occured. Print the record with a * and return
-			output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, "*", 0, 0, "", max_depth);
-			if(curdepth > 0 && direction == 0) //No more children or second spouse
-				clearbit(glob_map, curdepth);
-			return 1;
+			//Or we are generating a relationship tree, and this is one of the two people involved
+			if(rel_chart == 0)
+			{
+				output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, "*", 0, 0, "", max_depth);
+				if(curdepth > 0 && direction == 0) //No more children or second spouse
+					clearbit(glob_map, curdepth);
+				return 1;
+			}
+			else //is a relationship chart, so we stop at this depth.
+				max_depth = curdepth;
 		}
 			
 		rt->processed = pass;
 					
-		if(  max_depth == 0 || max_depth >= curdepth  )
+		if(  max_depth == 0 )
+			output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, curdepth ? "-":"", 0, 0, "", max_depth);
+		else if(max_depth >= curdepth)
 			if(output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, curdepth ? "-":"", 0, 0, "", max_depth) == 1)
 				return 1;
 		
@@ -299,7 +307,7 @@ char buff2[128];
 				} while(child_tmp);
 				if(ccount)
 				{
-					if(max_depth == curdepth )
+					if( max_depth == curdepth && max_depth != 0)
 					{
 						setbit(glob_map, curdepth + 1);
 						print_bars(ofile, glob_map, curdepth + 1);
@@ -404,7 +412,9 @@ char buff2[128];
 			
 		rt->processed = pass;
 					
-		if(  max_depth == 0 || max_depth >= curdepth  )
+		if(  max_depth == 0 )
+			output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, curdepth ? "-":"", 0, 0, "", max_depth);
+		else if ( max_depth >= curdepth  )
 			if(output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, curdepth ? "-":"", 0, 0, "", max_depth) == 1)
 				return 1;
 
@@ -453,7 +463,7 @@ char buff2[128];
 			if( ( max_depth == 0 || max_depth >= curdepth )
 			&& ((sex = find_type(rt, SEX)) && *sex->data == 'M') && child)
 			{
-				if(max_depth == curdepth )
+				if(max_depth == curdepth  && max_depth != 0 )
 				{
 					setbit(glob_map, curdepth + 1);
 					print_bars(ofile, glob_map, curdepth + 1);
@@ -474,7 +484,7 @@ char buff2[128];
 						child_rec = find_hash(child->data);
 						child = find_next_this_type(family, child);
 						if(child_rec)
-							if(output_decendants_info_of_name(ofile, child_rec, curdepth + 1, child  ? 1:0, glob_map , max_depth) == 1)
+							if(output_decendants_info_of_name(ofile, child_rec, curdepth + 1, child  ? 1:0, glob_map , max_depth) == 1 && max_depth != 0)
 								break;
 					}while(child);
 				}
@@ -526,6 +536,9 @@ ged_type *title;
 char *title_p;
 ged_type *resn;
 
+	//If we are restricting the number of generations output
+	//And we have passed the number of generations to output
+	//print ... and return
 	if(max_depth > 0 && max_depth < depth)
 	{
 		print_bars(ofile, map, depth);

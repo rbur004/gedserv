@@ -165,7 +165,9 @@ static void relation_chart
 	FILE *ofile, 
 	ged_type *rt,
 	int curdepth,
-	unsigned int *glob_map, ged_type *rt_1, ged_type *rt_2,
+	unsigned int *glob_map,
+	ged_type *rt_1,
+	ged_type *rt_2,
 	int max_depth
 )
 {
@@ -338,7 +340,7 @@ ged_type *name1, *name2;
 						else if (level2 == 3)
 							fprintf(fout, "indi1 is a great nephew/niece of indi2<br>\n");
 						else if (level2 > 3)
-							fprintf(fout, "indi1 is a great x %d nephew/niece of indi2<br>\n", level1);
+							fprintf(fout, "indi1 is a great x %d nephew/niece of indi2<br>\n", level1 + 1);
 					}
 					else if(level2 == 1)
 					{
@@ -347,7 +349,7 @@ ged_type *name1, *name2;
 						else if (level1 == 3)
 							fprintf(fout, "indi1 is a great uncle/aunt of indi2<br>\n");
 						else if (level1 > 3)
-							fprintf(fout, "indi1 is a great x %d uncle/aunt of indi2<br>\n", level2);
+							fprintf(fout, "indi1 is a great x %d uncle/aunt of indi2<br>\n", level2 + 1);
 					}
 					else
 					{
