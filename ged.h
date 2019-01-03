@@ -118,6 +118,7 @@ typedef struct
 #define CHR	    40
 #define WILL	41
 #define ADOP	42
+#define CREM  43
 
 #define PRIVACY "privacy"
 
@@ -166,6 +167,7 @@ typemap_t typemap[] =
 	"CHR",		CHR	    ,
 	"WILL",	    WILL    ,
 	"ADOP",     ADOP    ,
+	"CREM",     CREM    ,
 	 (char *)0, 0 	
 };
 

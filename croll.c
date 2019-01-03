@@ -1019,6 +1019,7 @@ ged_type *g;
 ged_type *birt;
 ged_type *chr;
 ged_type *deat;
+ged_type *crem;
 ged_type *buri;
 ged_type *date;
 ged_type *plac;
@@ -1129,6 +1130,17 @@ int mcount;
 				fprintf(fp, " <b>at</b> %s", plac->data);
 			source_given(fp, buri);
 			dump_notes(fp, buri, 1);
+		}
+
+		if(crem = find_type(indi, CREM))
+		{
+			fprintf(fp, "<dd><b>Cremated.</b>");
+			if(date = find_type(crem, DATE))
+				fprintf(fp, " %s", date->data);
+			if(plac = find_type(crem, PLAC))
+				fprintf(fp, " <b>at</b> %s", plac->data);
+			source_given(fp, crem);
+			dump_notes(fp, crem, 1);
 		}
 		
 		if(fams)
