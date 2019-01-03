@@ -516,6 +516,7 @@ int firstname;
 			surname, tree->data->indi->data,
 			extract_firstnames(tree->data, firstnames));
 		
+		    //Output birth date, if known. Christening date, if known, and birth date not known.
 		    if((birt = find_type(tree->data->indi, BIRT)) && (date = find_type(birt, DATE)))
 		    {
 		    	if(b_date = return_year(date->data)) //Yes one ='s
@@ -533,17 +534,18 @@ int firstname;
 		    else
 		 	fprintf(fp, "       ");
 
+      //output date of death, if known.
 		    if((death = find_type(tree->data->indi, DEAT)) && (date = find_type(death, DATE)))
 		    {
 		    	if(d_date = return_year(date->data)) //Yes one ='s
 		    		fprintf(fp, " <b>d.</b>%4.4d", d_date);
 		    	else
 		    		fprintf(fp, "       ");
-			}
+			  }
 		    else
 		    	fprintf(fp, "       ");
 	 
-			
+			//Output parents family link
 			if(famc = find_type(tree->data->indi, FAMC))
 			{
 				strip_ats(buff, famc->data);
@@ -552,8 +554,11 @@ int firstname;
 			}
 			else
 				fprintf(fp, " <b>      </b>");
+				
+			//output Marriages.
 			if(fams = find_type(tree->data->indi, FAMS))
 			{
+        //char spouse_fnames[128], spouse_sname[128];
 				mcount = 1;
 				strip_ats(buff, fams->data);
 				fprintf(fp, " <A href=\"/ruby/gedrelay.rbx?type=html&target=%s\"   ><b>M%d.</b></A>",  buff, mcount++);
