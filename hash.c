@@ -24,11 +24,6 @@ unsigned char *n;
         hash=(hash<<31 | hash>>1) ^ random_table[*n++];
     }
     hash = hash % hashsize;
-    if(hash < 0)
-    {   printf("Mod produces - nums\n");
-    sleep(1000);
-        exit(-1);
-    }
     return (hash);
 
 }
@@ -47,11 +42,6 @@ unsigned int hash;
 	    hash=(hash<<31 | hash>>1) ^ random_table[*n++];
 	}
 	hash = hash % hashsize;
-	if(hash < 0)
-	{	printf("Mod produces - nums\n");
-    sleep(1000);
-		exit(-1);
-	}
 	return (hash);
 }
 
