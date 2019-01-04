@@ -416,10 +416,10 @@ int j;
           if( (famc = find_type(g, FAMC)) )
           {
             strip_ats(fam_reference, famc->data);
-            fprintf(fp, " <A href=\"/ruby/gedrelay.rbx?type=html&target=%s#%s\"  ><b>Fam.</b></A>",  fam_reference, indi_reference);
+            fprintf(fp, " <A href=\"/ruby/gedrelay.rbx?type=html&target=%s#%s\"  ><b>Parents.</b></A>",  fam_reference, indi_reference);
           }
           else
-            fprintf(fp, " <b>    </b>");
+            fprintf(fp, " <b>        </b>");
             
           //Add Ancestor and Descendant links.
           fprintf(fp, " <a href=\"/ruby/gedrelay.rbx?type=TA&depth=2&target=%s\"><b>Anc.</b></a>", indi_reference);
@@ -559,10 +559,10 @@ int firstname;
       if( (famc = find_type(tree->data->indi, FAMC)) )
       {
         strip_ats(fam_reference, famc->data);
-        fprintf(fp, " <A href=\"/ruby/gedrelay.rbx?type=html&target=%s#%s\"  ><b>Fam.</b></A>",  fam_reference, indi_reference);
+        fprintf(fp, " <A href=\"/ruby/gedrelay.rbx?type=html&target=%s#%s\"  ><b>Parents.</b></A>",  fam_reference, indi_reference);
       }
       else
-        fprintf(fp, " <b>    </b>");
+        fprintf(fp, " <b>        </b>");
         
       fprintf(fp, " <a href=\"/ruby/gedrelay.rbx?type=TA&depth=2&target=%s\"><b>Anc.</b></a>", indi_reference);
       fprintf(fp, " <a href=\"/ruby/gedrelay.rbx?type=TD&depth=2&target=%s\"><b>Des.</b></a>", indi_reference);
