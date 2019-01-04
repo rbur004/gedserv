@@ -1,6 +1,6 @@
 #define TOKEN_C
 #include "token.h"
-
+#include <string.h>
 
 int token_to_num(token_table *table, char *type)
 {
@@ -10,7 +10,7 @@ token_table *t;
 		return 0;
 		
 	for(t = table; t->token; t++)
-		if( strcmp(type, t->token) == 0)
+		if( strcmp(type, t->token) == 0 )
 			return t->tokenid;
 	return 0;
 }
