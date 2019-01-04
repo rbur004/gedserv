@@ -1,5 +1,6 @@
 #ifndef CROLL_H
 #define CROLL_H
+#include "ged.h"
 
 void init_gedlists();
 void add_to_all(ged_type *line);
@@ -20,6 +21,7 @@ void parse_gedcom(char *buff, int num_files);
 char *enclosing_records_key(ged_type *l);
 ged_type *find_type(ged_type * g, int type);
 ged_type *find_next_this_type(ged_type *base, ged_type *last_one);
+ged_type * find_spouse(ged_type *fam, char * indi_reference);
 void Print_enclosing_record(ged_type *l);
 void Print_record(ged_type *g);
 ged_type *find_first_spou(ged_type *g);
