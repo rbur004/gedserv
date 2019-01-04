@@ -488,23 +488,21 @@ ged_type * find_spouse(ged_type *fam, char * indi_reference)
 ged_type * spouse;
 char spouse_reference[32];
   
-  if( (spouse = find_type(fam, HUSB)) )
+  family = find_hash(fam->data);
+  if( (spouse = find_type(family, HUSB)) )
   {
     strip_ats(spouse_reference, spouse->data);
     if( strncmp(indi_reference, spouse_reference, 32) == 0 ) //Looking at self, not spouse.
     {
-      if((spouse = find_type(fam, WIFE)) == (ged_type *) 0) //Look for WIFE instead
+      if((spouse = find_type(family, WIFE)) == (ged_type *) 0) //Look for WIFE instead
         return (ged_type *) 0; //Didn't find a spouse.
+      
       strip_ats(spouse_reference, spouse->data);
+      if( strncmp(indi_reference, spouse_reference, 32) == 0 ) //Looking at self, not spouse, which is an error in the gedcom file.
+        return (ged_type *) 0; //Didn't find a spouse.
     }
   }
-  else if( (spouse = find_type(fam, WIFE)) ) //was no HUSB record, so look for WIFE
-  {
-    strip_ats(spouse_reference, spouse->data);
-    if( strncmp(indi_reference, spouse_reference, 32) == 0 ) //Looking at self, not spouse.
-      return (ged_type *) 0; //Didn't find a spouse.
-  }
-  else //no HUSB or WIFE recorded
+  else //no HUSB or WIFE recorded, or just one is recorded, which means it must be self (or a gedcom error)
     return (ged_type *) 0; //Didn't find a spouse.
   
   return find_hash(spouse->data);
