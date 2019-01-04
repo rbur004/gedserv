@@ -41,7 +41,7 @@ int type;
 
 	resn = find_type(g, RESN); //look for restriction notices
 	
-	if(current_level = g->level)
+	if( (current_level = g->level) )
 	{	
 		for(i = 0; i < g->level; i++)
 			fputc(' ', fp);

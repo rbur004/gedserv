@@ -41,7 +41,7 @@ int base = 0;
 		return -1;
 	strncpy(buff1, date, 1024);	//make a copy as we are going to fill it full of nulls
 	buff1[1023] = 0;			//Ensure null termination
-	if(nargs1 = getarglist(buff1, v1, 32)) //make arg list
+	if( (nargs1 = getarglist(buff1, v1, 32)) ) //make arg list
 	{
 		if(findcasestring( v1[base], Calendar_Escape_Sequence, CALENDAR_ESCAPE_SEQUENCE_SIZE) != -1)
 			base++;

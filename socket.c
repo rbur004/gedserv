@@ -2,12 +2,15 @@
 #include <stdlib.h>
 
 #include <sys/types.h>
+#include <sys/uio.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <time.h>
 #include <signal.h>
 #include <sys/wait.h>
-
+#include <unistd.h>
+#include <ctype.h>
+ 
 #include "ged.h"
 #include "hash.h"
 #include "croll.h"
@@ -19,6 +22,7 @@
 #include "token.h"
 #include "socket.h"
 #include "relationship.h"
+#include "ged_dump.h"
 
 extern int errno;
 
@@ -190,6 +194,7 @@ int net_A, net_B, net_C;
     
     shutdown(s,0);
     close(s);
+    return 0;
 }
 
 void send_error(int sd, int error)
@@ -628,7 +633,7 @@ int c;
 			if((p = strchr(url, '.')) != 0)
 				*p = '\0';
 				
-			if(	g = find_hash(&url[6]))
+			if(	(g = find_hash(&url[6])) )
 			{
 				if(!headeronly)
 				{
@@ -648,7 +653,7 @@ int c;
 		{
 			if((p = strchr(url, '.')) != 0)
 				*p = '\0';
-			if(	g = find_hash(&url[5]))
+			if(	(g = find_hash(&url[5])) )
 			{
 				if(!headeronly)
 				{
@@ -665,7 +670,7 @@ int c;
 		{
 			if((p = strchr(url, '.')) != 0)
 				*p = '\0';
-			if(	g = find_hash(&url[6]))
+			if(	(g = find_hash(&url[6])) )
 			{
 				if(!headeronly)
 				{
@@ -682,7 +687,7 @@ int c;
 		{
 			if((p = strchr(url, '.')) != 0)
 				*p = '\0';
-			if(	g = find_hash(&url[6]))
+			if(	(g = find_hash(&url[6])) )
 			{
 				if(!headeronly)
 				{

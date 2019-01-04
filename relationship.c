@@ -230,7 +230,7 @@ rel_list_type *rl2;
 
 
 	//add to list in lowest to highest order
-	if(rl1 = *X)
+	if( (rl1 = *X) )
 	{ //list in not empty
 		if(rl1->level > level) 
 		{ //it should be added as the first list element
@@ -271,11 +271,11 @@ ged_type *name1, *name2;
 		glob_map[i] = 0;
 
 	fprintf(fout, "Finding Relationship between indi_1");
-	if(name1 = find_type(rt_2, NAME))
+	if( (name1 = find_type(rt_2, NAME)) )
 		fprintf(fout, " %s<br> and ", name1->data);
 	else
 		fprintf(fout, " Unknown<br> and ");
-	if(name2 = find_type(rt_1, NAME))
+	if( (name2 = find_type(rt_1, NAME)) )
 		fprintf(fout, "indi_2 %s<br>\n", name2->data);
 	else
 		fprintf(fout, "indi_2 Unknown<br>\n");

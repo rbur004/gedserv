@@ -30,7 +30,7 @@ unsigned int glob_map[8];
 	for(i = 0; i < 8; i++)
 		glob_map[i] = 0;
 
-	if(name = find_type(rt, NAME))
+	if( (name = find_type(rt, NAME)) )
 		title = name->data;
 	else
 		title = "unknown";
@@ -56,7 +56,7 @@ unsigned int glob_map[8];
 	for(i = 0; i < 8; i++)
 		glob_map[i] = 0;
 
-	if(name = find_type(rt, NAME))
+	if( (name = find_type(rt, NAME)) )
 		title = name->data;
 	else
 		title = "unknown";
@@ -82,7 +82,7 @@ unsigned int glob_map[8];
 	for(i = 0; i < 8; i++)
 		glob_map[i] = 0;
 
-	if(name = find_type(rt, NAME))
+	if( (name = find_type(rt, NAME)) )
 		title = name->data;
 	else
 		title = "unknown";
@@ -252,11 +252,11 @@ char buff2[128];
 			mcount++;
 
 			sprintf(buffer, "<b>m.</b>");
-			if( marr = find_type(family, MARR) )
+			if( (marr = find_type(family, MARR)) )
 			{
-				if( date = find_type(marr, DATE) )
+				if( (date = find_type(marr, DATE)) )
 					 sprintf(&buffer[strlen(buffer)], " %s ", date->data);
-				if( plac = find_type(marr, PLAC) )
+				if( (plac = find_type(marr, PLAC)) )
 					sprintf(buff2, "<b>,m. at</b> %s ", plac->data);
 				else
 					buff2[0] = '\0';
@@ -264,7 +264,7 @@ char buff2[128];
 			else
 				 buff2[0] = '\0';
 				
-			if( (husb = find_type(family, HUSB))
+			if( (husb = find_type(family, HUSB) )
 		 	&& (husb_rec = find_hash(husb->data))
 			&& husb_rec != rt )
 			{
@@ -330,7 +330,7 @@ char buff2[128];
 						do
 						{
 							child_rec = next_child_rec;
-							if(child = find_next_this_type(family, child))
+							if( (child = find_next_this_type(family, child)) )
 								next_child_rec = find_hash(child->data);
 							if(child_rec 
 							&& (rel_chart == 0 
@@ -424,11 +424,11 @@ char buff2[128];
 			mcount++;
 
 			sprintf(buffer, "<b>m.</b>");
-			if( marr = find_type(family, MARR) )
+			if( (marr = find_type(family, MARR)) )
 			{
-				if( date = find_type(marr, DATE) )
+				if( (date = find_type(marr, DATE)) )
 					 sprintf(&buffer[strlen(buffer)], " %s ", date->data);
-				if( plac = find_type(marr, PLAC) )
+				if( (plac = find_type(marr, PLAC)) )
 					sprintf(buff2, "<b>,m. at</b> %s ", plac->data);
 				else
 					buff2[0] = '\0';
