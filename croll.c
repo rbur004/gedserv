@@ -487,6 +487,7 @@ ged_type * find_spouse(ged_type *fam, char * indi_reference)
 {
 ged_type * spouse;
 char spouse_reference[32];
+ged_type * family;
   
   family = find_hash(fam->data);
   if( (spouse = find_type(family, HUSB)) )
