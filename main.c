@@ -6,7 +6,8 @@
 #include "socket.h"
 
 #include "pathnames.h"
-
+#include "croll.h"
+#include "btree.h"
 
 int main(int argc , char **argv)
 {
