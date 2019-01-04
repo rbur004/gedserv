@@ -1,7 +1,6 @@
 #ifndef GED_H
 #define GED_H
 
-
 //A GEDCOM file has line based records containing level type and data.
 //The zero level records are 0 index type.
 //Each record can have sub records of the same form.
