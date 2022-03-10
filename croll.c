@@ -1039,6 +1039,7 @@ ged_type *note;
 
 void html_dump_indi(FILE *fp, ged_type *indi, int parent)
 {
+int privacy = 0;
 ged_type *name;
 ged_type *note;
 ged_type *g;
@@ -1060,23 +1061,23 @@ char buff[128];
 int mcount;
 
   
+  if((resn = find_type(indi, RESN)) && strcmp(resn->data, PRIVACY) == 0)
+  {
+    privacy = 1;
+    fprintf(fp, "<dl><dt>");
+    fprintf(fp, "<b>%s</b> \n", "Record Withheld at the persons request");
+     fams = find_type(indi, FAMS);
+    famc = find_type(indi, FAMC);
+  }
   if( (name = find_type(indi, NAME)) )
   {
-    if((resn = find_type(indi, RESN)) && strcmp(resn->data, PRIVACY) == 0)
-    {
-      fprintf(fp, "<dl><dt>");
-      fprintf(fp, "<b>%s</b> \n", "Name Withheld at the persons request");
-      fams = find_type(indi, FAMS);
-      famc = find_type(indi, FAMC);
-    }
-    else
+    if(!privacy)
     {
       fprintf(fp, "<dl><dt>");
       if((title = find_type(name, TITL)))
         fprintf(fp, "<b>%s </b>", title->data);
         
       fprintf(fp, "<b>%s</b> \n", name->data);
-        
       
       if((adop = find_type(indi, ADOP)))
       { parent = 1;
@@ -1114,61 +1115,61 @@ int mcount;
         fprintf(fp, "<b>%s</b> \n", name->data);
         source_given(fp, name);
       }
-    }
     
-    if( (birt = find_type(indi, BIRT)) )
-    {
-      fprintf(fp, "<dd><b>b.</b>");
-      if( (date = find_type(birt, DATE)) )
-        fprintf(fp, " %s", date->data);
-      if( (plac = find_type(birt, PLAC)) )
-        fprintf(fp, " <b>at</b> %s", plac->data);
-      source_given(fp, birt);
-      dump_notes(fp, birt,1 );
-    }
-    if( (chr = find_type(indi, CHR)) )
-    {
-      fprintf(fp, "<dd><b>c.</b>");
-      if( (date = find_type(chr, DATE)) )
-        fprintf(fp, " %s", date->data);
-      if( (plac = find_type(chr, PLAC)) )
-        fprintf(fp, " <b>at</b> %s", plac->data);
-      source_given(fp, chr);
-      dump_notes(fp, chr, 1 );
-    }
-    if( (deat = find_type(indi, DEAT)) )
-    {
-      fprintf(fp, "<dd><b>d.</b>");
-      if( (date = find_type(deat, DATE)) )
-        fprintf(fp, " %s", date->data);
-      if( (plac = find_type(deat, PLAC)) )
-        fprintf(fp, " <b>at</b> %s", plac->data);
-      source_given(fp, deat);
-      dump_notes(fp, deat, 1);
-    }
+      if( (birt = find_type(indi, BIRT)) )
+      {
+        fprintf(fp, "<dd><b>b.</b>");
+        if( (date = find_type(birt, DATE)) )
+          fprintf(fp, " %s", date->data);
+        if( (plac = find_type(birt, PLAC)) )
+          fprintf(fp, " <b>at</b> %s", plac->data);
+        source_given(fp, birt);
+        dump_notes(fp, birt,1 );
+      }
+      if( (chr = find_type(indi, CHR)) )
+      {
+        fprintf(fp, "<dd><b>c.</b>");
+        if( (date = find_type(chr, DATE)) )
+          fprintf(fp, " %s", date->data);
+        if( (plac = find_type(chr, PLAC)) )
+          fprintf(fp, " <b>at</b> %s", plac->data);
+        source_given(fp, chr);
+        dump_notes(fp, chr, 1 );
+      }
+      if( (deat = find_type(indi, DEAT)) )
+      {
+        fprintf(fp, "<dd><b>d.</b>");
+        if( (date = find_type(deat, DATE)) )
+          fprintf(fp, " %s", date->data);
+        if( (plac = find_type(deat, PLAC)) )
+          fprintf(fp, " <b>at</b> %s", plac->data);
+        source_given(fp, deat);
+        dump_notes(fp, deat, 1);
+      }
 
-    if( (buri = find_type(indi, BURI)) )
-    {
-      fprintf(fp, "<dd><b>Buried.</b>");
-      if( (date = find_type(buri, DATE)) )
-        fprintf(fp, " %s", date->data);
-      if( (plac = find_type(buri, PLAC)) )
-        fprintf(fp, " <b>at</b> %s", plac->data);
-      source_given(fp, buri);
-      dump_notes(fp, buri, 1);
-    }
+      if( (buri = find_type(indi, BURI)) )
+      {
+        fprintf(fp, "<dd><b>Buried.</b>");
+        if( (date = find_type(buri, DATE)) )
+          fprintf(fp, " %s", date->data);
+        if( (plac = find_type(buri, PLAC)) )
+          fprintf(fp, " <b>at</b> %s", plac->data);
+        source_given(fp, buri);
+        dump_notes(fp, buri, 1);
+      }
 
-    if( (crem = find_type(indi, CREM)) )
-    {
-      fprintf(fp, "<dd><b>Cremated.</b>");
-      if( (date = find_type(crem, DATE)) )
-        fprintf(fp, " %s", date->data);
-      if( (plac = find_type(crem, PLAC)) )
-        fprintf(fp, " <b>at</b> %s", plac->data);
-      source_given(fp, crem);
-      dump_notes(fp, crem, 1);
-    }
+      if( (crem = find_type(indi, CREM)) )
+      {
+        fprintf(fp, "<dd><b>Cremated.</b>");
+        if( (date = find_type(crem, DATE)) )
+          fprintf(fp, " %s", date->data);
+        if( (plac = find_type(crem, PLAC)) )
+          fprintf(fp, " <b>at</b> %s", plac->data);
+        source_given(fp, crem);
+        dump_notes(fp, crem, 1);
+      }
     
+    }
     if(fams)
     {
       mcount = 1;
@@ -1184,7 +1185,7 @@ int mcount;
       fprintf(fp,"</dd>\n");
     }
 
-    if( (note = find_type(indi, OCCU)) )
+    if(!privacy && (note = find_type(indi, OCCU)) )
     {
       fprintf(fp, "<dd><b>Occupation</b> %s\n", note->data);
       for(g = note->next; g && g != &all && g->level > note->level; g = g->next)
@@ -1198,7 +1199,7 @@ int mcount;
         source_given(fp, note);
       }
     }
-    if( (note = find_type(indi, EDUC)) )
+    if(!privacy && (note = find_type(indi, EDUC)) )
     {
       fprintf(fp, "<dd><b>Education</b> %s\n", note->data);
       for(g = note->next; g && g != &all && g->level > note->level; g = g->next)
@@ -1212,7 +1213,7 @@ int mcount;
         source_given(fp, note);
       }
     }
-    if( (will = find_type(indi, WILL)) )
+    if(!privacy && (will = find_type(indi, WILL)) )
     {
       fprintf(fp, "<dd><b>Will</b>\n");
       dump_notes(fp, will,1 );
@@ -1670,4 +1671,3 @@ ged_type *g, *n;
   load_gedcom();
   create_index();
 }
-

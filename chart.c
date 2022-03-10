@@ -557,6 +557,7 @@ ged_type *resn;
 
 	if(indiv)
 	{
+  int privacy = 0;
 		//if(blank)
 		//	clearbit(map, depth );
 		print_bars(ofile, map, depth);
@@ -570,47 +571,52 @@ ged_type *resn;
 			
 		if((resn = find_type(indiv, RESN)) && strcmp(resn->data, PRIVACY) == 0)
 		{
+      privacy = 1;
 			title_p = "";
 			np =  "Name Withheld at the persons request";
 		}
-	    else if((name = find_type(indiv, NAME)))
-	    {
+    else if((name = find_type(indiv, NAME)))
+    {
 			np = name->data;
 			if((title = find_type(name, TITL)))
 				title_p = title->data;
 			else
 				title_p = "";
 		}
-	    else
-	    {
+    else
+    {
 			np = "";
 			title_p = "";
 		}
 			
 		fprintf(ofile, "<A NAME=\"%s\"></A>", indiv->data); //Put a marker we can jump to
 			
-		if(fams)
-			fprintf(ofile, "%s<b>%s</b>%s<A HREF=\"/ruby/gedrelay.rbx?type=html&target=%s\" >%s</A>", prefix, title_p, 
-					(*title_p ? " ":""), strip_ats(buff, fams->data), np);
-		else if(famc)
-			fprintf(ofile, "%s<b>%s</b>%s<A HREF=\"/ruby/gedrelay.rbx?type=html&target=%s#%s\" >%s</A>", prefix,
-					title_p, (*title_p ? " ":""), strip_ats(buff, famc->data), 
-					strip_ats(buff2,indiv->data), np);
-		else
-			fprintf(ofile, "%s<b>%s</b>%s%s", prefix, title_p, (*title_p ? " ":""), np);
+    if(!privacy)
+    {
+  		if(fams)
+  			fprintf(ofile, "%s<b>%s</b>%s<A HREF=\"/ruby/gedrelay.rbx?type=html&target=%s\" >%s</A>", prefix, title_p, 
+  					(*title_p ? " ":""), strip_ats(buff, fams->data), np);
+  		else if(famc)
+  			fprintf(ofile, "%s<b>%s</b>%s<A HREF=\"/ruby/gedrelay.rbx?type=html&target=%s#%s\" >%s</A>", prefix,
+  					title_p, (*title_p ? " ":""), strip_ats(buff, famc->data), 
+  					strip_ats(buff2,indiv->data), np);
+  		else
+  			fprintf(ofile, "%s<b>%s</b>%s%s", prefix, title_p, (*title_p ? " ":""), np);
 
 	    if((birt = find_type(indiv, BIRT)) && (date = find_type(birt, DATE)))
 	    	fprintf(ofile, " <b>b.</b>%s", date->data);
 	    else if((chr = find_type(indiv, CHR)) && (date = find_type(chr, DATE)))
 	    	fprintf(ofile, " <b>c.</b>%s", date->data);
 
-
 	    if((deat = find_type(indiv, DEAT)) && (date = find_type(deat, DATE)))
 	    	fprintf(ofile, " <b>d.</b>%s", date->data);
-
-	    fprintf(ofile, " %s\n", suffix);
+    }
+    else {
+      fprintf(ofile, "%sName Withheld at the persons request", prefix);
+    }
+    fprintf(ofile, " %s\n", suffix);
 	}
-        return 0;
+  return 0;
 }
 
 char *colour_chart[] =
