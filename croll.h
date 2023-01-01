@@ -49,4 +49,3 @@ char *extract_filename(char *data);
 void reload(void);
 void html_dump(void);
 #endif
-

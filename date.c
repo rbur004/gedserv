@@ -27,7 +27,7 @@ int parse_date(char *date)
 // We expect dates to be of the form day month year
 //								  or month year
 //								  or year
-//								  or day 
+//								  or day
 //								  or day month
 // We might also get ABT, EST, ... in front
 // We will make a wild asumption and say no year will be below 32
@@ -58,11 +58,11 @@ int base = 0;
 				else
 					base++;
 			}
-		}			
+		}
 
 		if(findcasestring( v1[base], Date_Modifier, DATE_MODIFIER_SIZE) != -1)
 			base++;
-			
+
 		if(base < nargs1 && isdigit(*v1[base]) && (day = atoi(v1[base])) <= 31 && day > 0)
 			base++;
 		else
@@ -70,7 +70,7 @@ int base = 0;
 			day = 0; //Don't know so will hack something up later
 			//printf("No day in %s\n", date);
 		}
-			
+
 		if(base < nargs1 && (month = findcasestring(v1[base], months, NMONTHS)) != -1)
 		{
 			if(day == 0)
@@ -85,16 +85,16 @@ int base = 0;
 			month = 12; //HACK: Assume end of December
 			//printf("No month in %s\n", date);
 		}
-		
+
 		if(base < nargs1 && isdigit(*v1[base]))
-			year = atoi(v1[base]);	
-		else 
+			year = atoi(v1[base]);
+		else
 		{
 			year = 0;
 			printf("No year in %s\n", date);
 		}
-		
-		return	day + month * 32 + year * 384;					
+
+		return	day + month * 32 + year * 384;
 	}
 	return 0;
 }
@@ -112,7 +112,6 @@ int i1, i2;
 		return 0;	//d1 == d2
 	else if(i1 > i2)
 		return 1;	//d1 > d2
-	else 
+	else
 		return -1; 	//d2 > d1
 }
-

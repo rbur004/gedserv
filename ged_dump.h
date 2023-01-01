@@ -15,4 +15,3 @@ char *link_types[] =
 #endif //GED_DUMP_C
 
 #endif //GED_DUMP_H
-

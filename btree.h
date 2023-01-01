@@ -48,4 +48,3 @@ void create_index(void);
 btree_node_p add_index_name(btree_node_p root, ged_type *rt);
 
 #endif
-

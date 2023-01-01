@@ -4,7 +4,7 @@ void output_decendants_of_name( FILE *ofile, ged_type *rt, int max_depth);
 
 void output_pedigree_info
 (
-	FILE *ofile, 
+	FILE *ofile,
 	ged_type *rt,
 	int curdepth,
 	int direction,
@@ -15,7 +15,7 @@ void output_pedigree_info
 
 int output_decendants_info
 (
-	FILE *ofile, 
+	FILE *ofile,
 	ged_type *rt,
 	int curdepth,
 	int direction,
@@ -26,7 +26,7 @@ int output_decendants_info
 
 int output_decendants_info_of_name
 (
-	FILE *ofile, 
+	FILE *ofile,
 	ged_type *rt,
 	int curdepth,
 	int direction,
@@ -36,12 +36,12 @@ int output_decendants_info_of_name
 
 int output_pedigree_name
 (
-	FILE *ofile, 
-	ged_type *indiv, 
-	int depth, 
-	ged_type *famc, 
-	ged_type *fams, 
-	unsigned int *map, 
+	FILE *ofile,
+	ged_type *indiv,
+	int depth,
+	ged_type *famc,
+	ged_type *fams,
+	unsigned int *map,
 	char *prefix,
 	char *child_marker,
 	int  blank,
@@ -50,4 +50,3 @@ int output_pedigree_name
 );
 
 void print_bars(FILE *ofile, unsigned int *map, int depth);
-

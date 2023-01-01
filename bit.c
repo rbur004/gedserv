@@ -11,7 +11,7 @@ void setbit(unsigned int *bm, int i)
 //Clear a bit in an array of unsigned int
 void clearbit(unsigned int *bm, int i)
 {
-	bm[i/(sizeof(unsigned int) * 8)] &= ~(1 << ( i % (sizeof(unsigned int) * 8) ));	
+	bm[i/(sizeof(unsigned int) * 8)] &= ~(1 << ( i % (sizeof(unsigned int) * 8) ));
 }
 
 //Test for a bit being set in an array of unsigned int
@@ -25,4 +25,3 @@ int isbitclear(unsigned int *bm, int i)
 {
 	return (bm[i/(sizeof(unsigned int) * 8)] & (1 << ( i % (sizeof(unsigned int) * 8) ))) == 0;
 }
-
