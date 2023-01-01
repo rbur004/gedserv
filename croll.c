@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <time.h>
  #include <ctype.h>
-       
+
 #define GED_C
 #define CROLL_C
 
@@ -28,11 +28,11 @@ int i;
     hash_table[i] = (ged_type *) 0;
     NAMEhash_table[i] = (ged_type *) 0;
   }
-  
+
   head_INDI.next_this_type = &head_INDI;  //Head of list of individuals records
   head_INDI.last_this_type = &head_INDI;  //Head of list of individuals records
   head_INDI.next_sorted = &head_INDI;   //Keep a sorted name list
-  head_INDI.last_sorted = &head_INDI; 
+  head_INDI.last_sorted = &head_INDI;
   head_INDI.level = -1;         //Makes tests for same level work.
 
   head_FAM.next_this_type = &head_FAM;  // Head of list of Family records
@@ -58,17 +58,17 @@ int i;
   all.next = &all;          //Head of all data entered
   all.last = &all;          //Head of all data entered
 
-  all.next_this_type = &all;    
-  all.last_this_type = &all;  
+  all.next_this_type = &all;
+  all.last_this_type = &all;
 
-  all.next_this_type = &all;  
-  all.last_this_type = &all;  
+  all.next_this_type = &all;
+  all.last_this_type = &all;
 
-  all.next_this_type = &all; 
-  all.last_this_type = &all; 
+  all.next_this_type = &all;
+  all.last_this_type = &all;
 
   all.next_sorted = &all;     //Keep a sorted name list
-  all.last_sorted = &all; 
+  all.last_sorted = &all;
 
   all.level = -1;         //Makes tests for same level work.
 }
@@ -110,20 +110,20 @@ void delete_line(ged_type *line)
   {
     if(line->next && line->last)  //Ensure the link list doesn't have a hole in it
     {
-      line->next->last = line->last; 
+      line->next->last = line->last;
       line->last->next = line->next;
       //Ensure we stop further references to the list
-      line->next = 0; 
-      line->last = 0; 
+      line->next = 0;
+      line->last = 0;
     }
     if(line->level == 0)  //At level 0 we have type lists to fix up
     {
       if(line->next_this_type && line->last_this_type) //validate the list
       { //generic reverse to add_list()
-        line->next_this_type->last_this_type = line->last_this_type; 
+        line->next_this_type->last_this_type = line->last_this_type;
         line->last_this_type->next_this_type = line->next_this_type;
         //Ensure we stop further references to the list
-        line->last_this_type = 0; 
+        line->last_this_type = 0;
         line->next_this_type = 0;
       }
     }
@@ -179,7 +179,7 @@ static char buff[16];
   if(*s == '@')
     return s;
   else
-  { 
+  {
     buff[0] = '@';
     strcpy(&buff[1], s);
     strcat(buff, "@");
@@ -258,7 +258,7 @@ int level = atoi(level_p);
   this_line->last_this_type = 0; //Next record of this level
   this_line->rel_child_1=0;
   this_line->rel_child_2=0;
-  this_line->processed = 0; 
+  this_line->processed = 0;
   if(insert)
     insert_line(insert, this_line);
   else
@@ -272,7 +272,7 @@ int level = atoi(level_p);
     case INDI:
       add_list(this_line, &head_INDI); break;
     case FAM:
-      add_list(this_line, &head_FAM); break;  
+      add_list(this_line, &head_FAM); break;
     case EVEN:
       add_list(this_line, &head_EVEN); break;
     case SOUR:
@@ -306,7 +306,7 @@ char level_buff[8];
     return 0;
   strcpy(buffer, type);
   strcpy(&buffer[type_len], data);
-  sprintf(level_buff, "%d", level); 
+  sprintf(level_buff, "%d", level);
   return attach(insert, level_buff, buffer, &buffer[type_len]);
 }
 
@@ -316,13 +316,13 @@ int hash;
 ged_type *line;
 char *new_key;
 
-  
+
   new_key = add_ats(key);
   hash = hash_string((unsigned char *)new_key, 1024); //Hash the key
   line = hash_table[hash]; //Retrieve the first line pointer
   while(line)
   {
-    //printf("Trying %s\n", line->data);  
+    //printf("Trying %s\n", line->data);
     if(strcmp(line->data,  new_key) == 0) //Try to match key
       return line;
     line = line->hash_link; //Failed, so try the next in the chain
@@ -336,12 +336,12 @@ ged_type *find_NAMEhash(char *key)
 int hash;
 ged_type *line;
 
-  
+
   hash = hash_string((unsigned char *)key, 1024); //Hash the key
   line = NAMEhash_table[hash]; //Retrieve the first line pointer
   while(line)
   {
-    //printf("Trying %s\n", line->data);  
+    //printf("Trying %s\n", line->data);
     if(strcmp(line->data,  key) == 0) //Try to match key
       return line;
     line = line->NAMEhash_link; //Failed, so try the next in the chain
@@ -360,7 +360,7 @@ char *this_name = n->data;
       return n;
   }
   return (ged_type *) 0;
-  
+
 }
 
 
@@ -382,7 +382,7 @@ int lineno = 1; //Line number for error reporting
       if(*level_p == '0')
       { //This is a level 0 line (We assume no leading 0's)
         if((data_p = next_field(level_p)) == 0)
-        { 
+        {
           printf("Skipping: No INDEX, line %d: %s\n", lineno, l);
         }
         else if((type_p = next_field(data_p)) == 0)
@@ -396,29 +396,29 @@ int lineno = 1; //Line number for error reporting
           }
           else if(strcmp(data_p, "HEAD") == 0)
           {
-            attach(0, level_p, data_p, ""); 
+            attach(0, level_p, data_p, "");
           }
-          else  
+          else
             printf("Skipping: No TYPE, line %d: %s %s\n", lineno, l, data_p);
         }
         else
         {
           //We have a complete level 0 line
           next_field(type_p); //null terminate type.
-          attach(0, level_p, type_p, data_p);         
+          attach(0, level_p, type_p, data_p);
         }
-      } 
+      }
       else if(isdigit(*level_p))
       { //This is a sublevel line
         if((type_p = next_field(level_p)) == 0)
-        { 
+        {
           printf("Skipping: No TYPE, line %d: %s \n", lineno, l);
         }
         else
         {
           if((data_p = next_field(type_p)) == 0)
             data_p = "";
-          attach(0, level_p, type_p, data_p);         
+          attach(0, level_p, type_p, data_p);
         }
       }
       else
@@ -469,12 +469,12 @@ int type;
 
   if(last_one == 0 || base == 0)
     return 0;
-    
+
   level = base->level;
   type = type_to_num(last_one->type);
-  
-  for(last_one = last_one->next; 
-    last_one && last_one != &all && last_one->level > level; 
+
+  for(last_one = last_one->next;
+    last_one && last_one != &all && last_one->level > level;
     last_one=last_one->next)
   {
     if(last_one->level == level + 1 && type_to_num(last_one->type) == type)
@@ -488,7 +488,7 @@ ged_type * find_spouse(ged_type *fam, char * indi_reference)
 ged_type * spouse;
 char spouse_reference[32];
 ged_type * family;
-  
+
   family = find_hash(fam->data);
   if( (spouse = find_type(family, HUSB)) )
   {
@@ -497,7 +497,7 @@ ged_type * family;
     {
       if((spouse = find_type(family, WIFE)) == (ged_type *) 0) //Look for WIFE instead
         return (ged_type *) 0; //Didn't find a spouse.
-      
+
       strip_ats(spouse_reference, spouse->data);
       if( strncmp(indi_reference, spouse_reference, 32) == 0 ) //Looking at self, not spouse, which is an error in the gedcom file.
         return (ged_type *) 0; //Didn't find a spouse.
@@ -505,7 +505,7 @@ ged_type * family;
   }
   else //no HUSB or WIFE recorded, or just one is recorded, which means it must be self (or a gedcom error)
     return (ged_type *) 0; //Didn't find a spouse.
-  
+
   return find_hash(spouse->data);
 }
 
@@ -536,7 +536,7 @@ int i;
   }
   else
     g = l;
-  
+
   printf("0 %s %s\n", g->data, g->type);
   for(g = g->next; g && g->level != 0; g = g->next)
   {
@@ -557,7 +557,7 @@ int current_level;
     return;
   }
   if( (current_level = g->level) )
-  { 
+  {
     for(i = 0; i < g->level; i++)
       putchar(' ');
     printf("%d %s %s\n", g->level , g->type, g->data);
@@ -591,7 +591,7 @@ ged_type *first_child;
       return;
     if(first_child == find_first_spou(child))
         return;
-    while((first_child = find_type(first_child, YSIB)) 
+    while((first_child = find_type(first_child, YSIB))
        && (first_child = find_hash(first_child->data)))
     {
       if(first_child == find_first_spou(child))
@@ -633,10 +633,10 @@ char name1[128], name2[128];
 
     if((name = find_type(base_record, NAME)) == 0)
       printf("INDI %s has no name record\n", base_record->data);
-      
+
     for(g = base_record->next; g->level > 0; g = g->next) //For each sub record
     {
-      
+
       switch(type_to_num(g->type))
       {
       case FAMS:
@@ -661,7 +661,7 @@ char name1[128], name2[128];
               printf("Adding SEX %s to INDI %s \n", indicated_sex, base_record->data);
               dup_data_and_attach(base_record, 1,"SEX", indicated_sex);
             }
-            
+
           }
           else if(indicated_sex[0] != '\0' && *(sex->data) != indicated_sex[0])
             printf("INDI %s SEX already specified as %s\n", base_record->data, sex->data);
@@ -681,10 +681,10 @@ char name1[128], name2[128];
                 break;
             }while( (chil = find_next_this_type(fam, chil)) );
             if(chil == 0)
-              printf("FAM %s doesn't reference FAMC of INDI %s\n", g->data, base_record->data);       
+              printf("FAM %s doesn't reference FAMC of INDI %s\n", g->data, base_record->data);
           }
           else
-            printf("FAM %s doesn't reference FAMC of INDI %s\n", g->data, base_record->data);       
+            printf("FAM %s doesn't reference FAMC of INDI %s\n", g->data, base_record->data);
         }
         else
           printf("FAM %s for FAMC of INDI %s Not found\n",  g->data, base_record->data);
@@ -697,7 +697,7 @@ char name1[128], name2[128];
     spouse = 0;
     test_ats(base_record->data);
     husb_name.name = 0;
-    
+
     for(g = base_record->next; g->level > 0; g = g->next) //For each sub record
     {
       switch(type_to_num(g->type))
@@ -717,10 +717,10 @@ char name1[128], name2[128];
                 break;
             }while( (fams = find_next_this_type(husb, fams)) );
             if(fams == 0)
-              printf("INDI %s doesn't reference HUSB of FAM %s\n", g->data, base_record->data);       
+              printf("INDI %s doesn't reference HUSB of FAM %s\n", g->data, base_record->data);
           }
           else
-            printf("INDI %s doesn't reference HUSB of FAM %s\n", g->data, base_record->data);       
+            printf("INDI %s doesn't reference HUSB of FAM %s\n", g->data, base_record->data);
           spouse = 1;
         }
         else
@@ -738,10 +738,10 @@ char name1[128], name2[128];
                 break;
             }while( (fams = find_next_this_type(wife, fams)) );
             if(fams == 0)
-              printf("INDI %s doesn't reference WIFE of FAM %s\n", g->data, base_record->data);       
+              printf("INDI %s doesn't reference WIFE of FAM %s\n", g->data, base_record->data);
           }
           else
-            printf("INDI %s doesn't reference WIFE of FAM %s\n", g->data, base_record->data);       
+            printf("INDI %s doesn't reference WIFE of FAM %s\n", g->data, base_record->data);
           spouse = 1;
         }
         else
@@ -758,9 +758,9 @@ char name1[128], name2[128];
             extract_surname(&chil_name, name2);
           //  if(strcasecmp(name1, name2) != 0)
           //    printf("HUSB %s surname %s of FAM %s doesn't match child %s surname %s\n",
-          //        husb_name.indi->data, base_record->data, name1, g->data, name2);        
-          } 
-          
+          //        husb_name.indi->data, base_record->data, name1, g->data, name2);
+          }
+
           if( (famc = find_type(chil,FAMC)) )
           {
             do
@@ -769,10 +769,10 @@ char name1[128], name2[128];
                 break;
             }while( (famc = find_next_this_type(chil, famc)) );
             if(famc == 0)
-              printf("INDI %s doesn't reference CHIL of FAM %s\n", g->data, base_record->data);       
+              printf("INDI %s doesn't reference CHIL of FAM %s\n", g->data, base_record->data);
           }
           else
-            printf("INDI %s doesn't reference CHIL of FAM %s\n", g->data, base_record->data);       
+            printf("INDI %s doesn't reference CHIL of FAM %s\n", g->data, base_record->data);
         }
         else
           printf("INDI %s for CHIL of FAM %s Not found\n",  g->data, base_record->data);
@@ -780,7 +780,7 @@ char name1[128], name2[128];
       }
     }
     if(spouse == 0)
-      printf("FAM %s doesn't have a spouse record\n", base_record->data);   
+      printf("FAM %s doesn't have a spouse record\n", base_record->data);
   }
 }
 
@@ -829,7 +829,7 @@ int count = 1;
       } while(lspo_rec);
       count++;
     }
-      
+
   }
 }
 
@@ -997,7 +997,7 @@ ged_type *resn;
 
   if((resn = find_type(record, RESN)) && strcmp(resn->data, PRIVACY) == 0)
     return 1;
-  else 
+  else
     return 0;
 }
 
@@ -1039,6 +1039,7 @@ ged_type *note;
 
 void html_dump_indi(FILE *fp, ged_type *indi, int parent)
 {
+int privacy = 0;
 ged_type *name;
 ged_type *note;
 ged_type *g;
@@ -1059,25 +1060,25 @@ ged_type *afamc;
 char buff[128];
 int mcount;
 
-  
+
+  if((resn = find_type(indi, RESN)) && strcmp(resn->data, PRIVACY) == 0)
+  {
+    privacy = 1;
+    fprintf(fp, "<dl><dt>");
+    fprintf(fp, "<b>%s</b> \n", "Record Withheld at the persons request");
+     fams = find_type(indi, FAMS);
+    famc = find_type(indi, FAMC);
+  }
   if( (name = find_type(indi, NAME)) )
   {
-    if((resn = find_type(indi, RESN)) && strcmp(resn->data, PRIVACY) == 0)
-    {
-      fprintf(fp, "<dl><dt>");
-      fprintf(fp, "<b>%s</b> \n", "Name Withheld at the persons request");
-      fams = find_type(indi, FAMS);
-      famc = find_type(indi, FAMC);
-    }
-    else
+    if(!privacy)
     {
       fprintf(fp, "<dl><dt>");
       if((title = find_type(name, TITL)))
         fprintf(fp, "<b>%s </b>", title->data);
-        
+
       fprintf(fp, "<b>%s</b> \n", name->data);
-        
-      
+
       if((adop = find_type(indi, ADOP)))
       { parent = 1;
       }
@@ -1088,87 +1089,87 @@ int mcount;
         strcat(buff, ".html");
         fprintf(fp, " <a href=\"/ruby/gedrelay.rbx?type=html&target=%s\" ><b>Parents</b></a>. ", buff);
       }
-      
+
       if(adop && (afamc = find_type(adop, FAMC)))
       {
         strip_ats(buff, afamc->data);
         strcat(buff, ".html");
         fprintf(fp, " <a href=\"/ruby/gedrelay.rbx?type=html&target=%s\" ><b>Adopt Parents</b></a>. ", buff);
       }
-      
+
       fprintf(fp, "<A NAME=\"%s\"></A>\n", strip_ats(buff, indi->data));
       if(famc)
         fprintf(fp, " Draw <a href=\"/ruby/gedrelay.rbx?type=TA&depth=15&target=%s\"  ><b>Anc.</b></a> Tree. ", buff);
-      
+
       if( (fams = find_type(indi, FAMS)) )
         fprintf(fp, " Draw <a href=\"/ruby/gedrelay.rbx?type=TD&depth=15&target=%s\"  ><b>Desc.</b></a> Tree.\n", buff);
-      
+
       source_given(fp, name);
-      
+
       while( (name = find_next_this_type(indi, name)) )
       {
         fprintf(fp, "<br>- ");
         if((title = find_type(name, TITL)))
           fprintf(fp, "<b>%s </b>", title->data);
-          
+
         fprintf(fp, "<b>%s</b> \n", name->data);
         source_given(fp, name);
       }
-    }
-    
-    if( (birt = find_type(indi, BIRT)) )
-    {
-      fprintf(fp, "<dd><b>b.</b>");
-      if( (date = find_type(birt, DATE)) )
-        fprintf(fp, " %s", date->data);
-      if( (plac = find_type(birt, PLAC)) )
-        fprintf(fp, " <b>at</b> %s", plac->data);
-      source_given(fp, birt);
-      dump_notes(fp, birt,1 );
-    }
-    if( (chr = find_type(indi, CHR)) )
-    {
-      fprintf(fp, "<dd><b>c.</b>");
-      if( (date = find_type(chr, DATE)) )
-        fprintf(fp, " %s", date->data);
-      if( (plac = find_type(chr, PLAC)) )
-        fprintf(fp, " <b>at</b> %s", plac->data);
-      source_given(fp, chr);
-      dump_notes(fp, chr, 1 );
-    }
-    if( (deat = find_type(indi, DEAT)) )
-    {
-      fprintf(fp, "<dd><b>d.</b>");
-      if( (date = find_type(deat, DATE)) )
-        fprintf(fp, " %s", date->data);
-      if( (plac = find_type(deat, PLAC)) )
-        fprintf(fp, " <b>at</b> %s", plac->data);
-      source_given(fp, deat);
-      dump_notes(fp, deat, 1);
-    }
 
-    if( (buri = find_type(indi, BURI)) )
-    {
-      fprintf(fp, "<dd><b>Buried.</b>");
-      if( (date = find_type(buri, DATE)) )
-        fprintf(fp, " %s", date->data);
-      if( (plac = find_type(buri, PLAC)) )
-        fprintf(fp, " <b>at</b> %s", plac->data);
-      source_given(fp, buri);
-      dump_notes(fp, buri, 1);
-    }
+      if( (birt = find_type(indi, BIRT)) )
+      {
+        fprintf(fp, "<dd><b>b.</b>");
+        if( (date = find_type(birt, DATE)) )
+          fprintf(fp, " %s", date->data);
+        if( (plac = find_type(birt, PLAC)) )
+          fprintf(fp, " <b>at</b> %s", plac->data);
+        source_given(fp, birt);
+        dump_notes(fp, birt,1 );
+      }
+      if( (chr = find_type(indi, CHR)) )
+      {
+        fprintf(fp, "<dd><b>c.</b>");
+        if( (date = find_type(chr, DATE)) )
+          fprintf(fp, " %s", date->data);
+        if( (plac = find_type(chr, PLAC)) )
+          fprintf(fp, " <b>at</b> %s", plac->data);
+        source_given(fp, chr);
+        dump_notes(fp, chr, 1 );
+      }
+      if( (deat = find_type(indi, DEAT)) )
+      {
+        fprintf(fp, "<dd><b>d.</b>");
+        if( (date = find_type(deat, DATE)) )
+          fprintf(fp, " %s", date->data);
+        if( (plac = find_type(deat, PLAC)) )
+          fprintf(fp, " <b>at</b> %s", plac->data);
+        source_given(fp, deat);
+        dump_notes(fp, deat, 1);
+      }
 
-    if( (crem = find_type(indi, CREM)) )
-    {
-      fprintf(fp, "<dd><b>Cremated.</b>");
-      if( (date = find_type(crem, DATE)) )
-        fprintf(fp, " %s", date->data);
-      if( (plac = find_type(crem, PLAC)) )
-        fprintf(fp, " <b>at</b> %s", plac->data);
-      source_given(fp, crem);
-      dump_notes(fp, crem, 1);
+      if( (buri = find_type(indi, BURI)) )
+      {
+        fprintf(fp, "<dd><b>Buried.</b>");
+        if( (date = find_type(buri, DATE)) )
+          fprintf(fp, " %s", date->data);
+        if( (plac = find_type(buri, PLAC)) )
+          fprintf(fp, " <b>at</b> %s", plac->data);
+        source_given(fp, buri);
+        dump_notes(fp, buri, 1);
+      }
+
+      if( (crem = find_type(indi, CREM)) )
+      {
+        fprintf(fp, "<dd><b>Cremated.</b>");
+        if( (date = find_type(crem, DATE)) )
+          fprintf(fp, " %s", date->data);
+        if( (plac = find_type(crem, PLAC)) )
+          fprintf(fp, " <b>at</b> %s", plac->data);
+        source_given(fp, crem);
+        dump_notes(fp, crem, 1);
+      }
+
     }
-    
     if(fams)
     {
       mcount = 1;
@@ -1184,7 +1185,7 @@ int mcount;
       fprintf(fp,"</dd>\n");
     }
 
-    if( (note = find_type(indi, OCCU)) )
+    if(!privacy && (note = find_type(indi, OCCU)) )
     {
       fprintf(fp, "<dd><b>Occupation</b> %s\n", note->data);
       for(g = note->next; g && g != &all && g->level > note->level; g = g->next)
@@ -1198,7 +1199,7 @@ int mcount;
         source_given(fp, note);
       }
     }
-    if( (note = find_type(indi, EDUC)) )
+    if(!privacy && (note = find_type(indi, EDUC)) )
     {
       fprintf(fp, "<dd><b>Education</b> %s\n", note->data);
       for(g = note->next; g && g != &all && g->level > note->level; g = g->next)
@@ -1212,7 +1213,7 @@ int mcount;
         source_given(fp, note);
       }
     }
-    if( (will = find_type(indi, WILL)) )
+    if(!privacy && (will = find_type(indi, WILL)) )
     {
       fprintf(fp, "<dd><b>Will</b>\n");
       dump_notes(fp, will,1 );
@@ -1228,7 +1229,7 @@ int mcount;
 char *extract_filename(char *data)
 {
 static char filename[256], *p;
-  
+
   if(data == 0)
     return "";
   //Skip the @#A=
@@ -1266,7 +1267,7 @@ int j;
 
   sprintf(buff, ":%s:",  HTML_DIR);
   dirname_l = strlen(buff);
-  
+
   for(g = head_FAM.next_this_type; g != &head_FAM; g=g->next_this_type) //for each FAM record
   {
     strip_ats(&buff[dirname_l], g->data);
@@ -1277,7 +1278,7 @@ int j;
       for(j = 0; j < 26; j++)
         fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=index&target=index_%c\">%c</A> \n",  j+'A', j+'A');
       fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=surname&target=index_A\">Surname Only Index</A>\n");
-      
+
       fprintf(fp, "<h2>Marriage</h2>\n");
       if( (husb = find_type(g, HUSB)) )
         if( (husb_rec = find_hash(husb->data)) )
@@ -1332,7 +1333,7 @@ int j;
     else
       printf("Error: unable to create %s\n", buff);
   }
-  
+
 }
 
 void Indi_html_dump(FILE *fp, ged_type *g)
@@ -1340,7 +1341,7 @@ void Indi_html_dump(FILE *fp, ged_type *g)
 char buff[64];
 int j;
 
-  
+
   strip_ats(buff, g->data);
   fprintf(fp, "<html>\n<head><Title>%s</Title>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</head>\n<body>\n", buff);
 
@@ -1352,7 +1353,7 @@ int j;
   for(j = 0; j < 26; j++)
     fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=surnamef&target=index_%c\" >%c</A> \n", j+'A', j+'A');
   fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=surnamef&target=index_?\" >?</A> <b>No Surname INDEX</b><p>\n");
-  
+
   html_dump_indi(fp, g, 1);
   source_given(fp, g);
 
@@ -1378,7 +1379,7 @@ ged_type *child, *child_rec;
 char buff[64];
 int j;
 
-  
+
   strip_ats(buff, g->data);
   fprintf(fp, "<html>\n<head><Title>%s</Title>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</head>\n<body>\n", buff);
 
@@ -1390,7 +1391,7 @@ int j;
   for(j = 0; j < 26; j++)
     fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=surnamef&target=index_%c\" >%c</A> \n", j+'A', j+'A');
   fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=surnamef&target=index_?\" >?</A> <b>No Surname INDEX</b><p>\n");
-  
+
   fprintf(fp, "<h2>Marriage</h2>\n");
   if( (husb = find_type(g, HUSB)) )
   {
@@ -1468,7 +1469,7 @@ int j;
   fprintf(fp,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
   fprintf(fp,"Rob's <A HREF=\"http://www.burrowes.org/~rob/\"  >Home Page</A>\n");
   fprintf(fp,"</body></html>\n");
-  
+
 }
 
 void dump_gedcom()
@@ -1500,7 +1501,7 @@ int i;
   check_dates();
   html_dump();
   create_index();
-  
+
   i = 0;
   while(Ancestor_Tree[i].name)
   {
@@ -1518,7 +1519,7 @@ int i;
     }
     i++;
   }
-  
+
   i = 0;
   while(Descendants_Tree[i].name)
   {
@@ -1536,7 +1537,7 @@ int i;
     }
     i++;
   }
-  
+
   i = 0;
   while(Descendants_Single_Tree[i].name)
   {
@@ -1554,7 +1555,7 @@ int i;
     }
     i++;
   }
-  
+
 #ifdef FULL_DUMP
   for(g = all.next; g != &all; g=g->next)
   {
@@ -1616,13 +1617,13 @@ time_t mod_time;
     {
       Ged_File[i].length = filesize(fd);
       file_size += Ged_File[i].length;
-      
+
       //while we are at it, set the mod time to the latest mod time for this file.
       if((mod_time = get_modtime(fd)) > file_time)
         file_time = mod_time;
-        
+
       close(fd);
-      
+
     }
     else
     {
@@ -1648,7 +1649,7 @@ time_t mod_time;
     i++;
   }
   Data_buffer[file_size] = '\0';
-  
+
   if(j) //If we read anything; process it.
   {
     parse_gedcom(Data_buffer, num_files);
@@ -1666,8 +1667,7 @@ ged_type *g, *n;
     free(g);
   }
   free(Data_buffer);
-  
+
   load_gedcom();
   create_index();
 }
-
