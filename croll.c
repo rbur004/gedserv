@@ -1274,7 +1274,7 @@ int j;
     strcat(buff, ".html");
     if( (fp = fopen(buff, "w")) )
     {
-      fprintf(fp,"<html>\n<head><Title>%s</Title>\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</head>\n<body>\n", buff);
+      fprintf(fp,"<HTML>\n<HEAD><Title>%s</Title>\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</HEAD>\n<BODY>\n", buff);
       for(j = 0; j < 26; j++)
         fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=index&target=index_%c\">%c</A> \n",  j+'A', j+'A');
       fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=surname&target=index_A\">Surname Only Index</A>\n");
@@ -1343,7 +1343,7 @@ int j;
 
 
   strip_ats(buff, g->data);
-  fprintf(fp, "<html>\n<head><Title>%s</Title>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</head>\n<body>\n", buff);
+  fprintf(fp, "<HTML>\n<HEAD><TITLE>%s</TITLE>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</HEAD>\n<BODY>\n", buff);
 
   for(j = 0; j < 26; j++)
     fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=surname&target=index_%c\"  >%c</A> \n", j+'A', j+'A');
@@ -1381,7 +1381,7 @@ int j;
 
 
   strip_ats(buff, g->data);
-  fprintf(fp, "<html>\n<head><Title>%s</Title>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</head>\n<body>\n", buff);
+  fprintf(fp, "<HTML>\n<HEAD><TITLE>%s</TITLE>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</HEAD>\n<BODY>\n", buff);
 
   for(j = 0; j < 26; j++)
     fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=surname&target=index_%c\"  >%c</A> \n", j+'A', j+'A');

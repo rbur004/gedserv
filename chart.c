@@ -36,7 +36,7 @@ unsigned int glob_map[8];
 		title = "unknown";
 
 	//compute_pedigree_widths(rt, depth, widths);
-	fprintf(ofile, "<HTML><HEAD><TITLE>%s Ances.</TITLE><NAME=\"IndexWindow\">\n</HEAD>\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n<BODY><HR>\n<PRE>\n", title);
+	fprintf(ofile, "<HTML><HEAD><TITLE>%s Ances.</TITLE><NAME=\"IndexWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</HEAD>\n<BODY><HR>\n<PRE>\n", title);
 	pass++;
 	output_pedigree_info(ofile, rt, 0, 0, glob_map, 0, max_depth);
 	output_pedigree_index(ofile, rt, max_depth );
@@ -62,7 +62,7 @@ unsigned int glob_map[8];
 		title = "unknown";
 
 	//compute_pedigree_widths(rt, depth, widths);
-	fprintf(ofile, "<HTML><HEAD><TITLE>%s Desc.</TITLE><NAME=\"IndexWindow\">\n</HEAD>\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n<BODY><HR>\n<PRE>\n", title);
+	fprintf(ofile, "<HTML><HEAD><TITLE>%s Desc.</TITLE><NAME=\"IndexWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\"></HEAD>\n<BODY><HR>\n<PRE>\n", title);
 	pass++;
 	output_decendants_info(ofile, rt, 0, 0, glob_map, 0, max_depth);
 	output_descendants_index(ofile, rt, max_depth );
@@ -88,7 +88,7 @@ unsigned int glob_map[8];
 		title = "unknown";
 
 	//compute_pedigree_widths(rt, depth, widths);
-	fprintf(ofile, "<HTML><head><TITLE>%s Desc.(R.)</TITLE><NAME=\"IndexWindow\">\n</HEAD>\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n<BODY><HR>\n<PRE>\n", title);
+	fprintf(ofile, "<HTML><HEAD><TITLE>%s Desc.(R.)</TITLE><NAME=\"IndexWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</HEAD>\n<BODY><HR>\n<PRE>\n", title);
 	pass++;
 	output_decendants_info_of_name(ofile, rt, 0, 0, glob_map, max_depth);
 	fprintf(ofile,"</pre><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<p>\n");

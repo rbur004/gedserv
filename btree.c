@@ -357,7 +357,7 @@ int j;
     return;
   }
 
-  fprintf(fp, "<html>\n<head><title>Match of %s</title>\n<NAME=\"IndexWindow\">\n</head>\n<body><H2>Surname Index</H2>\n", match_me);
+  fprintf(fp, "<HTML>\n<HEAD><TITLE>Match of %s</TITLE>\n<NAME=\"IndexWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n<BODY><H2>Surname Index</H2>\n", match_me);
 
   output_form(fp);
   for(j = 0; j < 26; j++)
@@ -640,7 +640,7 @@ char *s;
   //generate Index file for each letter
   last_surname[0] = '\0'; //ready for cmp.
 
-  fprintf(fp, "<html>\n<head><title>Surname index%s_%c.html</title>\n<NAME=\"IndexWindow\">\n</head>\n<body><H2>Surname Index</H2>\n", s, letter);
+  fprintf(fp, "<HTML>\n<HEAD><TITLE>Surname index%s_%c.html</TITLE>\n<NAME=\"IndexWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n<BODY><H2>Surname Index</H2>\n", s, letter);
 
   output_form(fp);
   for(j = 0; j < 26; j++)
@@ -687,7 +687,7 @@ char *s;
   else
     s = "";
 
-  fprintf(fp, "<html>\n<head><title>index%s_%c.html</title>\n<NAME=\"IndexWindow\">\n</head>\n<body><H2>Full Index</H2>\n",s, letter);
+  fprintf(fp, "<HTML>\n<HEAD><TITLE>index%s_%c.html</TITLE>\n<NAME=\"IndexWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n<BODY><H2>Full Index</H2>\n",s, letter);
 
   output_form(fp);
   for(j = 0; j < 26; j++) //Splash indexes across top of the page
@@ -716,7 +716,7 @@ char buff[16];
 char last_surname[128];
 
 
-  //fprintf(fp, "<html>\n<head><title>index.html</title>\n<NAME=\"IndexWindow\">\n</head>\n<body>\n");
+  //fprintf(fp, "<HTML>\n<HEAD><TITLE>index.html</TITLE>\n<NAME=\"IndexWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n<BODY>\n");
 
   last_surname[0] = '\0';
 
@@ -765,7 +765,7 @@ char *p = 0;
   else
     s = "";
 
-  fprintf(fp, "<html>\n<head><title>%s Index%s</title> <NAME=\"IndexWindow\"> \n</head><body><H2>%s Index</H2>\n",thesurname, s, thesurname);
+  fprintf(fp, "<HTML>\n<HEAD><TITLE>%s Index%s</TITLE> <NAME=\"IndexWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n<BODY><H2>%s Index</H2>\n",thesurname, s, thesurname);
 
   output_form(fp);
   for(j = 0; j < 26; j++) //Splash indexes across top of the page

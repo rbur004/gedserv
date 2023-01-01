@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <ctype.h>
- 
+
 #include "ged.h"
 #include "hash.h"
 #include "croll.h"
@@ -43,7 +43,7 @@ time_t start_time;
 
 static void catch_children
 (
-    int sig 
+    int sig
 #ifndef LINUX
 	,
     int code,
@@ -66,7 +66,7 @@ int do_reload = 0;
 
 static void catch_SIGHUP
 (
-    int sig 
+    int sig
 #ifndef LINUX
 	,
     int code,
@@ -101,7 +101,7 @@ int net_A, net_B, net_C;
     }
     else
     	printf("Socket opened %d\n", s);
-    	
+
     if(setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&on, sizeof(int)) == -1)
 	printf("setsockopt failed: ignoring this\n");
 
@@ -120,11 +120,11 @@ int net_A, net_B, net_C;
         exit(0);
     }
 
-		
+
 	signal(SIGHUP, catch_SIGHUP);
 	signal(SIGPIPE, SIG_IGN);
 	signal(SIGCHLD, catch_children);
-		
+
     for(;run == 1;)
     {
 	addr_len = (socklen_t)sizeof(address);
@@ -133,7 +133,7 @@ int net_A, net_B, net_C;
 			do_reload = 0;
 			reload(); //rereads the files.
 		}
-		
+
        	if((sd = accept(s, (struct sockaddr *)&address, &addr_len)) == -1)
        	{   	//perror("accept failed");
            	continue;
@@ -147,7 +147,7 @@ int net_A, net_B, net_C;
 		{
 			if(net_C == 32 || net_C == 33
 			|| net_C == 34 || net_C == 35 || net_C == 36
-			|| net_C == 39 || net_C == 104 || net_C == 105 
+			|| net_C == 39 || net_C == 104 || net_C == 105
 			|| net_C == 106 || net_C == 107 || net_C == 108 )
 				departmental_connect_count++;
 			else
@@ -164,7 +164,7 @@ int net_A, net_B, net_C;
 #endif
 		if(result == 0)
 		{
-		
+
 #ifndef TEST_IT
 			close(s); /*close the listening socket for the child*/
 			signal(SIGPIPE, SIG_DFL);
@@ -176,10 +176,10 @@ int net_A, net_B, net_C;
 	       		printf("%s", buf);
 	       		fflush(stdout);
 #endif
-				if( ( (p = strrchr(buf, '\n')) && p != buf 
+				if( ( (p = strrchr(buf, '\n')) && p != buf
 					&& ( *(p-1) == '\n'
 						|| (*(p-1) == '\r' &&  p != &buf[1]  && *(p-2) == '\n') ) )
-						|| ( (p = strrchr(buf, '\r')) && p != buf 
+						|| ( (p = strrchr(buf, '\r')) && p != buf
 						&& ( *(p-1) == '\r'
 						|| (*(p-1) == '\n' &&  p != &buf[1]  && *(p-2) == '\r') ) ) )
 	       		{
@@ -189,13 +189,13 @@ int net_A, net_B, net_C;
 			}
        		close(sd);
 #ifndef TEST_IT
-			exit(0);	
+			exit(0);
 #endif
 		}
 		else
 			close(sd);
     }
-    
+
     shutdown(s,0);
     close(s);
     return 0;
@@ -216,14 +216,14 @@ time_t t;
 
 		if(error == 404)
 		{
-			fprintf(fp, "<HEAD><TITLE>404 Not Found</TITLE></HEAD>\n");
+			fprintf(fp, "<HEAD><TITLE>404 Not Found</TITLE>\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n");
 			fprintf(fp, "<BODY><H1>404 Not Found</H1>\n");
 			fprintf(fp, "The requested URL was not found on this server.\n");
 			fprintf(fp, "</BODY>\n");
 		}
 		else
 		{
-			fprintf(fp, "<HEAD><TITLE>%d Error</TITLE></HEAD>\n", error);
+			fprintf(fp, "<HEAD><TITLE>%d Error</TITLE>\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n", error);
 			fprintf(fp, "<BODY><H1>Invalid Request</H1>\n");
 			fprintf(fp, "Your client requested a transmission method other than those allowed by this server.\n");
 			fprintf(fp, "</BODY>\n");
@@ -233,7 +233,7 @@ time_t t;
 	}
 	else
 		perror("fdopen");
-	
+
 }
 
 void send_ok_header(FILE *fp, char *window)
@@ -242,7 +242,7 @@ time_t t;
 extern time_t file_time;
 char time_Buff[32];
 struct tm result;
-          
+
 	time(&t);
 	fprintf(fp, "HTTP/1.0 200\n");
 	fprintf(fp, "Date: %s", asctime_r(gmtime_r(&t, &result), time_Buff ));
@@ -258,7 +258,7 @@ void stats(FILE *fp)
 time_t t;
 char time_Buff[32];
 struct tm result;
-          
+
 	time(&t);
 	fprintf(fp, "HTTP/1.0 200\n");
 	fprintf(fp, "Date: %s", asctime_r(gmtime_r(&t, &result), time_Buff ));
@@ -266,8 +266,8 @@ struct tm result;
 	fprintf(fp, "Content-type: text/html\n");
 	fprintf(fp, "Last-modified: %s\n", asctime_r(gmtime_r(&t, &result), time_Buff ));
 
-	fprintf(fp, "<html><head><title>Status</title></head>\n<body>\n");
-	
+	fprintf(fp, "<HTML><HEAD><TITLE>Status</TITLE>\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n<BODY>\n");
+
 	fprintf(fp, "Last Restart: %s<br>", asctime_r(gmtime_r(&start_time, &result), time_Buff ));
 	fprintf(fp, "Current Date: %s<br>", asctime_r(gmtime_r(&t, &result), time_Buff ));
 	fprintf(fp, "<hr><p>Number of Dept connections this run %d</p><p><hr>\n", departmental_connect_count);
@@ -281,7 +281,7 @@ void robot(FILE *fp)
 time_t t;
 char time_Buff[32];
 struct tm result;
-          
+
 	time(&t);
 	fprintf(fp, "HTTP/1.0 200\n");
 	fprintf(fp, "Date: %s", asctime_r(gmtime_r(&t, &result), time_Buff ));
@@ -313,7 +313,7 @@ int c;
 
 	if((fp = fdopen(sd, "w")) != 0)
 	{
-		
+
 		if(strncmp(url, "/surname/index_", 15) == 0) //surname only index
 		{
 			if(!headeronly)
@@ -362,7 +362,7 @@ int c;
 			{
 				send_ok_header(fp, "IndexWindow");
 				while((p = strchr(&url[16], '+')) != 0) *p = '.';
-				while((p = strchr(&url[16], '%')) != 0) 
+				while((p = strchr(&url[16], '%')) != 0)
 				{
 					if(*(p+1) && *(p+2))
 					{
@@ -385,7 +385,7 @@ int c;
 			{
 				send_ok_header(fp, "IndexWindow");
 				while((p = strchr(&url[16], '+')) != 0) *p = '.';
-				while((p = strchr(&url[16], '%')) != 0) 
+				while((p = strchr(&url[16], '%')) != 0)
 				{
 					if(*(p+1) && *(p+2))
 					{
@@ -408,7 +408,7 @@ int c;
 			{
 				send_ok_header(fp, "IndexWindow");
 				while((p = strchr(&url[14], '+')) != 0) *p = '.';
-				while((p = strchr(&url[14], '%')) != 0) 
+				while((p = strchr(&url[14], '%')) != 0)
 				{
 					if(*(p+1) && *(p+2))
 					{
@@ -431,7 +431,7 @@ int c;
 			{
 				send_ok_header(fp, "IndexWindow");
 				while((p = strchr(&url[14], '+')) != 0) *p = '.';
-				while((p = strchr(&url[14], '%')) != 0) 
+				while((p = strchr(&url[14], '%')) != 0)
 				{
 					if(*(p+1) && *(p+2))
 					{
@@ -454,7 +454,7 @@ int c;
 			{
 				send_ok_header(fp, "IndexWindow");
 				while((p = strchr(&url[7], '+')) != 0) *p = '.';
-				while((p = strchr(&url[7], '%')) != 0) 
+				while((p = strchr(&url[7], '%')) != 0)
 				{
 					if(*(p+1) && *(p+2))
 					{
@@ -478,7 +478,7 @@ int c;
 				send_ok_header(fp, "IndexWindow");
 
 				while((p = strchr(&url[19], '+')) != 0) *p = '.';
-				while((p = strchr(&url[19], '%')) != 0) 
+				while((p = strchr(&url[19], '%')) != 0)
 				{
 					if(*(p+1) && *(p+2))
 					{
@@ -502,7 +502,7 @@ int c;
 				send_ok_header(fp, "IndexWindow");
 
 				while((p = strchr(&url[18], '+')) != 0) *p = '.';
-				while((p = strchr(&url[18], '%')) != 0) 
+				while((p = strchr(&url[18], '%')) != 0)
 				{
 					if(*(p+1) && *(p+2))
 					{
@@ -526,7 +526,7 @@ int c;
 				send_ok_header(fp, "IndexWindow");
 
 				while((p = strchr(&url[8], '+')) != 0) *p = '.';
-				while((p = strchr(&url[8], '%')) != 0) 
+				while((p = strchr(&url[8], '%')) != 0)
 				{
 					if(*(p+1) && *(p+2))
 					{
@@ -571,7 +571,7 @@ int c;
 					send_ok_header(fp, 0);
 			}
 			else
-				send_error(sd, 404)	;	
+				send_error(sd, 404)	;
 		}
 		else if( strncmp(url, "/TD", 3) == 0 && url[3] != 'N') //create descendant tree
 		{
@@ -600,7 +600,7 @@ int c;
 					send_ok_header(fp, 0);
 			}
 			else
-				send_error(sd, 404)	;	
+				send_error(sd, 404)	;
 
 		}
 		else if( strncmp(url, "/TDN", 4) == 0) //create descendant tree of this name only
@@ -630,13 +630,13 @@ int c;
 					send_ok_header(fp, 0);
 			}
 			else
-				send_error(sd, 404)	;	
+				send_error(sd, 404)	;
 		}
 		else if( strncmp(url, "/html/", 6) == 0) //create family page
 		{
 			if((p = strchr(url, '.')) != 0)
 				*p = '\0';
-				
+
 			if(	(g = find_hash(&url[6])) )
 			{
 				if(!headeronly)
@@ -651,7 +651,7 @@ int c;
 					send_ok_header(fp, 0);
 			}
 			else
-				send_error(sd, 404)	;	
+				send_error(sd, 404)	;
 		}
 		else if( strncmp(url, "/ged/", 5) == 0) //create family page
 		{
@@ -668,7 +668,7 @@ int c;
 					send_ok_header(fp, 0);
 			}
 			else
-				send_error(sd, 404)	;		
+				send_error(sd, 404)	;
 		}
 		else if( strncmp(url, "/sour/", 6) == 0) //create family page
 		{
@@ -685,7 +685,7 @@ int c;
 					send_ok_header(fp, 0);
 			}
 			else
-				send_error(sd, 404)	;		
+				send_error(sd, 404)	;
 		}
 		else if( strncmp(url, "/repo/", 6) == 0) //create family page
 		{
@@ -702,7 +702,7 @@ int c;
 					send_ok_header(fp, 0);
 			}
 			else
-				send_error(sd, 404)	;		
+				send_error(sd, 404)	;
 		}
 		else if( strncmp(url, "/robot", 6) == 0) //Handle Robot Search engines
 		{
@@ -753,7 +753,7 @@ int c;
 						send_ok_header(fp, 0);
 				}
 				else
-					send_error(sd, 404)	;		
+					send_error(sd, 404)	;
 			}
 			else
 			{
@@ -762,11 +762,11 @@ int c;
 		}
 		else
 		{
- 			send_error(sd, 404)	;	
+ 			send_error(sd, 404)	;
  		}
 		fflush(fp);
 		fclose(fp);
-	}	
+	}
 	else
 		perror("fdopen");
 }
@@ -794,4 +794,3 @@ char url[128];
 			break;
 	}
 }
-

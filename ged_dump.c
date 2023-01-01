@@ -23,7 +23,7 @@ int type;
 int privacy = 0;
 
 	strip_ats(buff2,g->data);
-	fprintf(fp, "<html>\n<head><Title>%s</Title>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</html>\n<body>\n", buff2);
+	fprintf(fp, "<HTML>\n<HEAD><TITLE>%s</TITLE>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n</HTML>\n<BODY>\n", buff2);
 
 	for(j = 0; j < 26; j++)
 		fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=surname&target=index_%c\" >%c</A> \n", j+'A', j+'A');
