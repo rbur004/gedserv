@@ -24,7 +24,8 @@
 #include "relationship.h"
 #include "ged_dump.h"
 
-extern int errno;
+#include <errno.h>
+// extern int errno;
 
 //#define TEST_IT
 
@@ -105,12 +106,15 @@ int net_A, net_B, net_C;
 	printf("setsockopt failed: ignoring this\n");
 
     record.sin_family = AF_INET;
-    record.sin_addr.s_addr = INADDR_ANY;
+    record.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+    // record.sin_addr.s_addr = INADDR_ANY;
     record.sin_port = htons(PORT);
+
     if(bind(s, (struct sockaddr *)&record, sizeof(record)) == -1)
     {   printf("bind failed %d\n",errno);
         exit(0);
     }
+
     if(listen(s,5) == -1)
     {   printf("listen failed %d\n",errno);
         exit(0);
