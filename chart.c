@@ -34,7 +34,7 @@ unsigned int glob_map[8];
 		title = name->data;
 	else
 		title = "unknown";
-      
+
 	//compute_pedigree_widths(rt, depth, widths);
 	fprintf(ofile, "<HTML><HEAD><TITLE>%s Ances.</TITLE><NAME=\"IndexWindow\">\n</HEAD>\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n<BODY><HR>\n<PRE>\n", title);
 	pass++;
@@ -60,7 +60,7 @@ unsigned int glob_map[8];
 		title = name->data;
 	else
 		title = "unknown";
-      
+
 	//compute_pedigree_widths(rt, depth, widths);
 	fprintf(ofile, "<HTML><HEAD><TITLE>%s Desc.</TITLE><NAME=\"IndexWindow\">\n</HEAD>\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n<BODY><HR>\n<PRE>\n", title);
 	pass++;
@@ -86,7 +86,7 @@ unsigned int glob_map[8];
 		title = name->data;
 	else
 		title = "unknown";
-      
+
 	//compute_pedigree_widths(rt, depth, widths);
 	fprintf(ofile, "<HTML><head><TITLE>%s Desc.(R.)</TITLE><NAME=\"IndexWindow\">\n</HEAD>\n<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n<BODY><HR>\n<PRE>\n", title);
 	pass++;
@@ -100,7 +100,7 @@ unsigned int glob_map[8];
 
 void output_pedigree_info
 (
-	FILE *ofile, 
+	FILE *ofile,
 	ged_type *rt,
 	int curdepth,
 	int direction,
@@ -115,7 +115,7 @@ ged_type *family;
 ged_type *husb, *wife;
 ged_type *husb_rec, *wife_rec;
 
-    if(rt) 
+    if(rt)
     {
 
     	if((famc = find_type(rt, FAMC)))
@@ -123,7 +123,7 @@ ged_type *husb_rec, *wife_rec;
 		else
 			family = 0;
 		fams = find_type(rt, FAMS);
-				
+
     	if(rt->processed == pass)
 		{	//A loop has occured. Print the record with a * and return
 			output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, "*", child_marker, 1, "", max_depth);
@@ -131,7 +131,7 @@ ged_type *husb_rec, *wife_rec;
 				setbit(glob_map,curdepth);	//IF you are male parent then set this level bit
 			else
 				clearbit(glob_map,curdepth);	//below female parent we don't want the bit set
-			print_bars(ofile, glob_map, curdepth); 
+			print_bars(ofile, glob_map, curdepth);
 			if(isbitset(glob_map, curdepth))
 				print_lastbar(ofile, curdepth);
 			else
@@ -140,18 +140,18 @@ ged_type *husb_rec, *wife_rec;
 			clearbit(glob_map,curdepth);		//below this level we don't want the bit set
 			return;
 		}
-			
-		rt->processed = pass;			
+
+		rt->processed = pass;
 
 		if( ( max_depth == 0 || max_depth >= curdepth )
-		 && family 
+		 && family
 		 && (husb = find_type(family, HUSB))
 		 && (husb_rec = find_hash(husb->data)))
 		{
 			output_pedigree_info(ofile, husb_rec, curdepth + 1, 1, glob_map, rt->data, max_depth);
 		}
 
-			
+
 		output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, "", child_marker, 1, "", max_depth);
 
 		if(direction)
@@ -165,20 +165,20 @@ ged_type *husb_rec, *wife_rec;
 		 && (wife_rec = find_hash(wife->data)))
 		{
 			setbit(glob_map, curdepth+1); //set the next level line drawing bit
-			print_bars(ofile, glob_map, curdepth + 1); 
+			print_bars(ofile, glob_map, curdepth + 1);
 			print_lastbar(ofile, curdepth+1);
-			fputc( '\n', ofile); 
+			fputc( '\n', ofile);
 			output_pedigree_info(ofile, wife_rec, curdepth + 1, 0, glob_map, rt->data, max_depth);
 		}
 		else
 		{
-			print_bars(ofile, glob_map, curdepth); 
+			print_bars(ofile, glob_map, curdepth);
 			if(isbitset(glob_map, curdepth))
 				print_lastbar(ofile, curdepth);
 			else
 				print_lastspace(ofile);
 			fputc( '\n', ofile);
-		} 
+		}
 
 		clearbit(glob_map, curdepth);	//below this level we don't want the bit set
 										//Not That it will be printed anyway.
@@ -188,7 +188,7 @@ ged_type *husb_rec, *wife_rec;
 
 int output_decendants_info
 (
-	FILE *ofile, 
+	FILE *ofile,
 	ged_type *rt,
 	int curdepth,
 	int direction,
@@ -213,15 +213,15 @@ int mcount = 0 ;
 char buffer[64];
 char buff2[128];
 
-    if(rt) 
+    if(rt)
     {
     	if((fams = find_type(rt, FAMS))) //look for a spouse and family
 			family = find_hash(fams->data);
 		else
 			family = 0;
-			
+
 		famc = find_type(rt, FAMC);
-		
+
     	if(rt->processed == pass)
 		{	//A loop has occured. Print the record with a * and return
 			//Or we are generating a relationship tree, and this is one of the two people involved
@@ -235,15 +235,15 @@ char buff2[128];
 			else //is a relationship chart, so we stop at this depth.
 				max_depth = curdepth;
 		}
-			
+
 		rt->processed = pass;
-					
+
 		if(  max_depth == 0 )
 			output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, curdepth ? "-":"", 0, 0, "", max_depth);
 		else if(max_depth >= curdepth)
 			if(output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, curdepth ? "-":"", 0, 0, "", max_depth) == 1)
 				return 1;
-		
+
 		while(  family )
 		{
 			int ccount;
@@ -263,7 +263,7 @@ char buff2[128];
 			}
 			else
 				 buff2[0] = '\0';
-				
+
 			if( (husb = find_type(family, HUSB) )
 		 	&& (husb_rec = find_hash(husb->data))
 			&& husb_rec != rt )
@@ -297,8 +297,8 @@ char buff2[128];
 				{
 					child_rec = find_hash(child_tmp->data);
 					child_tmp = find_next_this_type(family, child_tmp);
-					if(child_rec 
-					&& (rel_chart == 0 
+					if(child_rec
+					&& (rel_chart == 0
 						|| in_rel_list(rt->rel_child_1, child_rec)
 						|| in_rel_list(rt->rel_child_2, child_rec)))
 					{
@@ -332,11 +332,11 @@ char buff2[128];
 							child_rec = next_child_rec;
 							if( (child = find_next_this_type(family, child)) )
 								next_child_rec = find_hash(child->data);
-							if(child_rec 
-							&& (rel_chart == 0 
+							if(child_rec
+							&& (rel_chart == 0
 								|| in_rel_list(rt->rel_child_1, child_rec)
 								|| in_rel_list(rt->rel_child_2, child_rec)))
-								output_decendants_info(ofile, child_rec, curdepth + 1, 
+								output_decendants_info(ofile, child_rec, curdepth + 1,
 									(next_child_rec && --ccount) ? 1:0, glob_map, rel_chart, max_depth) ;
 						} while(child);
 					}
@@ -362,14 +362,14 @@ char buff2[128];
 			}
 			else
 				family = 0;
-		}					
+		}
     }
     return 0;
 }
 
 int output_decendants_info_of_name
 (
-	FILE *ofile, 
+	FILE *ofile,
 	ged_type *rt,
 	int curdepth,
 	int direction,
@@ -393,15 +393,15 @@ int mcount = 0 ;
 char buffer[64];
 char buff2[128];
 
-    if(rt) 
+    if(rt)
     {
     	if((fams = find_type(rt, FAMS))) //look for a spouse and family
 			family = find_hash(fams->data);
 		else
 			family = 0;
-			
+
 		famc = find_type(rt, FAMC);
-		
+
     	if(rt->processed == pass)
 		{	//A loop has occured. Print the record with a * and return
 			output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, "*", 0, 0, "", max_depth);
@@ -409,16 +409,16 @@ char buff2[128];
 				clearbit(glob_map, curdepth);
 			return 1;
 		}
-			
+
 		rt->processed = pass;
-					
+
 		if(  max_depth == 0 )
 			output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, curdepth ? "-":"", 0, 0, "", max_depth);
 		else if ( max_depth >= curdepth  )
 			if(output_pedigree_name(ofile, rt, curdepth, famc, fams, glob_map, curdepth ? "-":"", 0, 0, "", max_depth) == 1)
 				return 1;
 
-		
+
 		while(  family )
 		{
 			mcount++;
@@ -435,7 +435,7 @@ char buff2[128];
 			}
 			else
 				 buff2[0] = '\0';
-				
+
 			if( (husb = find_type(family, HUSB))
 		 	&& (husb_rec = find_hash(husb->data))
 			&& husb_rec != rt )
@@ -491,7 +491,7 @@ char buff2[128];
 				print_bars(ofile, glob_map, curdepth + 1);
 				fputc('\n', ofile);
 				clearbit(glob_map, curdepth + 1);
-			
+
 			}
 			if(fams)
 			{
@@ -502,19 +502,19 @@ char buff2[128];
 			}
 			else
 				family = 0;
-		}					
+		}
     }
     return 0;
 }
 
 int output_pedigree_name
 (
-	FILE *ofile, 
-	ged_type *indiv, 
-	int depth, 
-	ged_type *famc, 
-	ged_type *fams, 
-	unsigned int *map, 
+	FILE *ofile,
+	ged_type *indiv,
+	int depth,
+	ged_type *famc,
+	ged_type *fams,
+	unsigned int *map,
 	char *prefix,
 	char *child_marker,
 	int  blank,
@@ -549,7 +549,7 @@ ged_type *resn;
 			else
 				print_lastbar(ofile, depth);
 		}
-			
+
 		fprintf(ofile, "<b>...</b>\n");
 
 		return 1;
@@ -557,6 +557,7 @@ ged_type *resn;
 
 	if(indiv)
 	{
+  int privacy = 0;
 		//if(blank)
 		//	clearbit(map, depth );
 		print_bars(ofile, map, depth);
@@ -567,50 +568,55 @@ ged_type *resn;
 			else
 				print_lastbar(ofile, depth);
 		}
-			
+
 		if((resn = find_type(indiv, RESN)) && strcmp(resn->data, PRIVACY) == 0)
 		{
+      privacy = 1;
 			title_p = "";
 			np =  "Name Withheld at the persons request";
 		}
-	    else if((name = find_type(indiv, NAME)))
-	    {
+    else if((name = find_type(indiv, NAME)))
+    {
 			np = name->data;
 			if((title = find_type(name, TITL)))
 				title_p = title->data;
 			else
 				title_p = "";
 		}
-	    else
-	    {
+    else
+    {
 			np = "";
 			title_p = "";
 		}
-			
+
 		fprintf(ofile, "<A NAME=\"%s\"></A>", indiv->data); //Put a marker we can jump to
-			
-		if(fams)
-			fprintf(ofile, "%s<b>%s</b>%s<A HREF=\"/ruby/gedrelay.rbx?type=html&target=%s\" >%s</A>", prefix, title_p, 
-					(*title_p ? " ":""), strip_ats(buff, fams->data), np);
-		else if(famc)
-			fprintf(ofile, "%s<b>%s</b>%s<A HREF=\"/ruby/gedrelay.rbx?type=html&target=%s#%s\" >%s</A>", prefix,
-					title_p, (*title_p ? " ":""), strip_ats(buff, famc->data), 
-					strip_ats(buff2,indiv->data), np);
-		else
-			fprintf(ofile, "%s<b>%s</b>%s%s", prefix, title_p, (*title_p ? " ":""), np);
+
+    if(!privacy)
+    {
+  		if(fams)
+  			fprintf(ofile, "%s<b>%s</b>%s<A HREF=\"/ruby/gedrelay.rbx?type=html&target=%s\" >%s</A>", prefix, title_p,
+  					(*title_p ? " ":""), strip_ats(buff, fams->data), np);
+  		else if(famc)
+  			fprintf(ofile, "%s<b>%s</b>%s<A HREF=\"/ruby/gedrelay.rbx?type=html&target=%s#%s\" >%s</A>", prefix,
+  					title_p, (*title_p ? " ":""), strip_ats(buff, famc->data),
+  					strip_ats(buff2,indiv->data), np);
+  		else
+  			fprintf(ofile, "%s<b>%s</b>%s%s", prefix, title_p, (*title_p ? " ":""), np);
 
 	    if((birt = find_type(indiv, BIRT)) && (date = find_type(birt, DATE)))
 	    	fprintf(ofile, " <b>b.</b>%s", date->data);
 	    else if((chr = find_type(indiv, CHR)) && (date = find_type(chr, DATE)))
 	    	fprintf(ofile, " <b>c.</b>%s", date->data);
 
-
 	    if((deat = find_type(indiv, DEAT)) && (date = find_type(deat, DATE)))
 	    	fprintf(ofile, " <b>d.</b>%s", date->data);
-
-	    fprintf(ofile, " %s\n", suffix);
+    }
+    else {
+      fprintf(ofile, "%sName Withheld at the persons request", prefix);
+    }
+    fprintf(ofile, " %s\n", suffix);
 	}
-        return 0;
+  return 0;
 }
 
 char *colour_chart[] =
@@ -631,24 +637,23 @@ void print_bars(FILE *ofile, unsigned int *map, int depth)
 {
 int i;
 
-	fprintf( ofile, "%s", isbitset(map,0) ? "|" : " " );	
+	fprintf( ofile, "%s", isbitset(map,0) ? "|" : " " );
 
 	for(i = 1; i <= depth - 1; i++)
 	{
 		if(isbitset(map,i))
-			fprintf( ofile, "<FONT COLOR=\"%s\">%*s</FONT>", colour_chart[i%NCOLORCHART_ITEMS], PEDIGREE_WIDTH, "|"  );	
+			fprintf( ofile, "<FONT COLOR=\"%s\">%*s</FONT>", colour_chart[i%NCOLORCHART_ITEMS], PEDIGREE_WIDTH, "|"  );
 		else
-			fprintf( ofile, "<FONT COLOR=\"%s\">%*s</FONT>", colour_chart[i%NCOLORCHART_ITEMS], PEDIGREE_WIDTH, " "  );	
+			fprintf( ofile, "<FONT COLOR=\"%s\">%*s</FONT>", colour_chart[i%NCOLORCHART_ITEMS], PEDIGREE_WIDTH, " "  );
 	}
 }
 
 static void print_lastbar(FILE *ofile, int depth)
 {
-	fprintf( ofile, "<FONT COLOR=\"%s\">%*s</FONT>", colour_chart[depth%NCOLORCHART_ITEMS], PEDIGREE_WIDTH, "|");	
+	fprintf( ofile, "<FONT COLOR=\"%s\">%*s</FONT>", colour_chart[depth%NCOLORCHART_ITEMS], PEDIGREE_WIDTH, "|");
 }
 
 static void print_lastspace(FILE *ofile)
 {
-	fprintf( ofile, "%*s", PEDIGREE_WIDTH - 1 , "");	
+	fprintf( ofile, "%*s", PEDIGREE_WIDTH - 1 , "");
 }
-
