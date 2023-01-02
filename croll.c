@@ -1343,7 +1343,7 @@ int j;
 
 
   strip_ats(buff, g->data);
-  fprintf(fp, "<HTML>\n<HEAD><TITLE>%s</TITLE>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n<BODY>\n", buff);
+  fprintf(fp, "<HTML>\n<HEAD><TITLE>%s</TITLE>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"noindex, nofollow, noarchive\">\n</HEAD>\n<BODY>\n", buff);
 
   for(j = 0; j < 26; j++)
     fprintf(fp, "<A HREF=\"/ruby/gedrelay.rbx?type=surname&target=index_%c\"  >%c</A> \n", j+'A', j+'A');

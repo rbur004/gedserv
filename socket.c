@@ -216,14 +216,14 @@ time_t t;
 
 		if(error == 404)
 		{
-			fprintf(fp, "<HEAD><TITLE>404 Not Found</TITLE>\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n");
+			fprintf(fp, "<HEAD><TITLE>404 Not Found</TITLE>\n<META NAME=\"ROBOTS\" CONTENT=\"noindex, nofollow, noarchive\">\n</HEAD>\n");
 			fprintf(fp, "<BODY><H1>404 Not Found</H1>\n");
 			fprintf(fp, "The requested URL was not found on this server.\n");
 			fprintf(fp, "</BODY>\n");
 		}
 		else
 		{
-			fprintf(fp, "<HEAD><TITLE>%d Error</TITLE>\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n", error);
+			fprintf(fp, "<HEAD><TITLE>%d Error</TITLE>\n<META NAME=\"ROBOTS\" CONTENT=\"noindex, nofollow, noarchive\">\n</HEAD>\n", error);
 			fprintf(fp, "<BODY><H1>Invalid Request</H1>\n");
 			fprintf(fp, "Your client requested a transmission method other than those allowed by this server.\n");
 			fprintf(fp, "</BODY>\n");
@@ -266,7 +266,7 @@ struct tm result;
 	fprintf(fp, "Content-type: text/html\n");
 	fprintf(fp, "Last-modified: %s\n", asctime_r(gmtime_r(&t, &result), time_Buff ));
 
-	fprintf(fp, "<HTML><HEAD><TITLE>Status</TITLE>\n<META NAME=\"ROBOTS\" CONTENT=\"NOINDEX, NOFOLLOW\">\n</HEAD>\n<BODY>\n");
+	fprintf(fp, "<HTML><HEAD><TITLE>Status</TITLE>\n<META NAME=\"ROBOTS\" CONTENT=\"noindex, nofollow, noarchive\">\n</HEAD>\n<BODY>\n");
 
 	fprintf(fp, "Last Restart: %s<br>", asctime_r(gmtime_r(&start_time, &result), time_Buff ));
 	fprintf(fp, "Current Date: %s<br>", asctime_r(gmtime_r(&t, &result), time_Buff ));
