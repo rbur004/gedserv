@@ -40,9 +40,9 @@ unsigned int glob_map[8];
 	pass++;
 	output_pedigree_info(ofile, rt, 0, 0, glob_map, 0, max_depth);
 	output_pedigree_index(ofile, rt, max_depth );
-	fprintf(ofile,"</pre><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<p>\n");
+	fprintf(ofile,"</pre><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<p>\n");
 	fprintf(ofile,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-	fprintf(ofile,"Rob's <A HREF=\"http://www.burrowes.org/~rob/\"  >Home Page</A>\n");
+	fprintf(ofile,"Rob's <A HREF=\"https://www.burrowes.org/~rob/\"  >Home Page</A>\n");
 	fprintf(ofile, "</BODY></HTML>\n");
 }
 
@@ -66,9 +66,9 @@ unsigned int glob_map[8];
 	pass++;
 	output_decendants_info(ofile, rt, 0, 0, glob_map, 0, max_depth);
 	output_descendants_index(ofile, rt, max_depth );
-	fprintf(ofile,"</pre><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<p>\n");
+	fprintf(ofile,"</pre><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<p>\n");
 	fprintf(ofile,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-	fprintf(ofile,"Rob's <A HREF=\"http://www.burrowes.org/~rob/\"  >Home Page</A>\n");
+	fprintf(ofile,"Rob's <A HREF=\"https://www.burrowes.org/~rob/\"  >Home Page</A>\n");
 	fprintf(ofile, "</BODY></HTML>\n");
 }
 
@@ -91,9 +91,9 @@ unsigned int glob_map[8];
 	fprintf(ofile, "<HTML><HEAD><TITLE>%s Desc.(R.)</TITLE><NAME=\"IndexWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"noindex, nofollow, noarchive, noarchive\">\n</HEAD>\n<BODY><HR>\n<PRE>\n", title);
 	pass++;
 	output_decendants_info_of_name(ofile, rt, 0, 0, glob_map, max_depth);
-	fprintf(ofile,"</pre><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<p>\n");
+	fprintf(ofile,"</pre><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<p>\n");
 	fprintf(ofile,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-	fprintf(ofile,"Rob's <A HREF=\"http://www.burrowes.org/~rob/\"  >Home Page</A>\n");
+	fprintf(ofile,"Rob's <A HREF=\"https://www.burrowes.org/~rob/\"  >Home Page</A>\n");
 	fprintf(ofile, "</BODY></HTML>\n");
 }
 

@@ -81,10 +81,10 @@ int privacy = 0;
       fprintf(fp,"%d <b>%s</b> %s<br>\n", g->level, g->type, g->data);
 	}
 
-	fprintf(fp,"<p><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<br>\n");
+	fprintf(fp,"<p><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<br>\n");
 	fprintf(fp,"<A HREF=\"/ruby/gedrelay.rbx?type=html&target=%s\" >Format</a><p>\n", buff2);
 	fprintf(fp,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-	fprintf(fp,"Rob's <A HREF=\"http://www.burrowes.org/~rob/\"  >Home Page</A>\n");
+	fprintf(fp,"Rob's <A HREF=\"https://www.burrowes.org/~rob/\"  >Home Page</A>\n");
 	fprintf(fp,"</body></html>\n");
 
 }

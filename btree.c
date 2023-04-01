@@ -448,9 +448,9 @@ int j;
       }while( (name = find_next_this_type(g, name)) );
     }
   }
-  fprintf(fp, "<p></KBD></pre><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
+  fprintf(fp, "<p></KBD></pre><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
   fprintf(fp, "<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-  fprintf(fp, "Rob's <A HREF=\"http://www.burrowes.org/~rob/\" >Home Page</A>\n");
+  fprintf(fp, "Rob's <A HREF=\"https://www.burrowes.org/~rob/\" >Home Page</A>\n");
   fprintf(fp, "</body></html>\n");
 
 }
@@ -656,9 +656,9 @@ char *s;
   sprintf(buff, "index%s_%c.html", s,  letter);
   dump_tree_body(fp, root[i], buff, 0x1, last_surname, no_surname);
 
-  fprintf(fp, "<p><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
+  fprintf(fp, "<p><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
   fprintf(fp, "<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-  fprintf(fp, "Rob's <A HREF=\"http://www.burrowes.org/~rob/\" >Home Page</A>\n");
+  fprintf(fp, "Rob's <A HREF=\"https://www.burrowes.org/~rob/\" >Home Page</A>\n");
   fprintf(fp, "</body></html>\n");
 
 }
@@ -704,9 +704,9 @@ char *s;
   sprintf(buff, "index%s_%c.html", s, letter);
   dump_tree_body(fp, root[i], buff, 0x2, last_surname, no_surname);
 
-  fprintf(fp, "</KBD></pre><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
+  fprintf(fp, "</KBD></pre><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
   fprintf(fp,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-  fprintf(fp, "Rob's <A HREF=\"http://www.burrowes.org/~rob/\" >Home Page</A>\n");
+  fprintf(fp, "Rob's <A HREF=\"https://www.burrowes.org/~rob/\" >Home Page</A>\n");
   fprintf(fp, "</body></html>\n");
 }
 
@@ -724,9 +724,9 @@ char last_surname[128];
   sprintf(buff, "index.html");
   dump_tree_body(fp, r, buff, 0x2, last_surname, 0);
 
-  //fprintf(fp, "</KBD></pre><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
+  //fprintf(fp, "</KBD></pre><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
   //fprintf(fp,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-  //fprintf(fp, "Rob's <A HREF=\"http://www.burrowes.org/~rob/\" >Home Page</A>\n");
+  //fprintf(fp, "Rob's <A HREF=\"https://www.burrowes.org/~rob/\" >Home Page</A>\n");
   //fprintf(fp, "</body></html>\n");
 }
 
@@ -787,9 +787,9 @@ char *p = 0;
   if(no_surname == 0 && p != 0 && name_buff[0] != '\0')
     dump_tree_body(fp, root[char_to_index(name_buff[0])], buff, 0x6, name_buff, no_surname);
 
-  fprintf(fp, "</KBD></pre><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
+  fprintf(fp, "</KBD></pre><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
   fprintf(fp,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-  fprintf(fp, "Rob's <A HREF=\"http://www.burrowes.org/~rob/\" >Home Page</A>\n");
+  fprintf(fp, "Rob's <A HREF=\"https://www.burrowes.org/~rob/\" >Home Page</A>\n");
   fprintf(fp, "</body></html>\n");
 }
 

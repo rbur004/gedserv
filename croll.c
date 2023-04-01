@@ -1311,7 +1311,7 @@ int j;
       dump_notes(fp, g, 0);
       if( (pict = find_type(g, PICT)) )
       {
-        fprintf(fp, "<IMG SRC=\"http://www.burrowes.org/FamilyTree/%s\" ALIGN=TOP><br>\n", extract_filename(pict->data));
+        fprintf(fp, "<IMG SRC=\"https://www.burrowes.org/FamilyTree/%s\" ALIGN=TOP><br>\n", extract_filename(pict->data));
       }
       fprintf(fp, "<h2>Children</h2>\n");
       if( (child = find_type(g, CHIL)) )
@@ -1324,9 +1324,9 @@ int j;
             html_dump_indi(fp, child_rec, 0);
         fprintf(fp, "</ul>\n");
       }
-      fprintf(fp,"<b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
+      fprintf(fp,"<b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\" ><b>Entry Page</b></A>.<p>\n");
       fprintf(fp,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-      fprintf(fp,"Rob's <A HREF=\"http://www.burrowes.org/~rob/\" >Home Page</A>\n");
+      fprintf(fp,"Rob's <A HREF=\"https://www.burrowes.org/~rob/\" >Home Page</A>\n");
       fprintf(fp,"</body></html>\n");
       fclose(fp);
     }
@@ -1357,10 +1357,10 @@ int j;
   html_dump_indi(fp, g, 1);
   source_given(fp, g);
 
-  fprintf(fp,"<b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<br>\n");
+  fprintf(fp,"<b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<br>\n");
   fprintf(fp,"Dump raw <A HREF=\"/ruby/gedrelay.rbx?type=ged&target=%s\" >GEDCOM</a><p>\n", buff);
   fprintf(fp,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-  fprintf(fp,"Rob's <A HREF=\"http://www.burrowes.org/~rob/\"  >Home Page</A>\n");
+  fprintf(fp,"Rob's <A HREF=\"https://www.burrowes.org/~rob/\"  >Home Page</A>\n");
   fprintf(fp,"</body></html>\n");
 }
 
@@ -1445,7 +1445,7 @@ int j;
   dump_notes(fp, g, 0);
   if( (pict = find_type(g, PICT)) )
   {
-    fprintf(fp, "<IMG SRC=\"http://www.burrowes.org/FamilyTree/%s\" ALIGN=TOP><br>\n", extract_filename(pict->data));
+    fprintf(fp, "<IMG SRC=\"https://www.burrowes.org/FamilyTree/%s\" ALIGN=TOP><br>\n", extract_filename(pict->data));
   }
   fprintf(fp, "<h2>Children</h2>\n");
   if( (child = find_type(g, CHIL)) )
@@ -1464,10 +1464,10 @@ int j;
       }
     fprintf(fp, "</ul>\n");
   }
-  fprintf(fp,"<b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<br>\n");
+  fprintf(fp,"<b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<br>\n");
   fprintf(fp,"Dump raw <A HREF=\"/ruby/gedrelay.rbx?type=ged&target=%s\" >GEDCOM</a><p>\n", buff);
   fprintf(fp,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-  fprintf(fp,"Rob's <A HREF=\"http://www.burrowes.org/~rob/\"  >Home Page</A>\n");
+  fprintf(fp,"Rob's <A HREF=\"https://www.burrowes.org/~rob/\"  >Home Page</A>\n");
   fprintf(fp,"</body></html>\n");
 
 }

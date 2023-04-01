@@ -372,9 +372,9 @@ ged_type *name1, *name2;
 			}
 		}
 	}
-	fprintf(fout,"</pre><b>Go to the Tree's </b><A HREF=\"http://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<p>\n");
+	fprintf(fout,"</pre><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<p>\n");
 	fprintf(fout,"<hr>Maintained by <A HREF=\"mailto:rob@cs.auckland.ac.nz\">Rob Burrowes</A>.<br>\n");
-	fprintf(fout,"Rob's <A HREF=\"http://www.burrowes.org/~rob/\"  >Home Page</A>\n");
+	fprintf(fout,"Rob's <A HREF=\"https://www.burrowes.org/~rob/\"  >Home Page</A>\n");
 	fprintf(fout, "</BODY></HTML>\n");
 
 }
