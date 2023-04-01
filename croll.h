@@ -27,7 +27,6 @@ void Print_record(ged_type *g);
 ged_type *find_first_spou(ged_type *g);
 void follow_child_list(ged_type *parent, ged_type *child);
 ged_type *exists(ged_type *cspo, ged_type *r);
-void dump_gedcom();
 int filesize(int fd);
 void load_gedcom(void);
 void check_links();
@@ -47,5 +46,4 @@ void Indi_html_dump(FILE *fp, ged_type *g);
 void Family_html_dump(FILE *fp, ged_type *g);
 char *extract_filename(char *data);
 void reload(void);
-void html_dump(void);
 #endif
