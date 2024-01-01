@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "ged.h"
 #include "croll.h"
@@ -604,12 +605,27 @@ ged_type *resn;
   			fprintf(ofile, "%s<b>%s</b>%s%s", prefix, title_p, (*title_p ? " ":""), np);
 
 	    if((birt = find_type(indiv, BIRT)) && (date = find_type(birt, DATE)))
-	    	fprintf(ofile, " <b>b.</b>%s", date->data);
+			{ int b_date = 0;
+				if( (b_date = return_year(date->data)) )
+					fprintf(ofile, " <b>b.</b>%4.4d", b_date);
+				else
+					fprintf(ofile, " <b>b.</b>%s", date->data);
+			}
 	    else if((chr = find_type(indiv, CHR)) && (date = find_type(chr, DATE)))
-	    	fprintf(ofile, " <b>c.</b>%s", date->data);
+			{ int c_date = 0;
+				if( (c_date = return_year(date->data)) )
+					fprintf(ofile, " <b>c.</b>%4.4d", c_date);
+				else
+					fprintf(ofile, " <b>c.</b>%s", date->data);
+			}
 
 	    if((deat = find_type(indiv, DEAT)) && (date = find_type(deat, DATE)))
-	    	fprintf(ofile, " <b>d.</b>%s", date->data);
+			{ int d_date = 0;
+				if( (d_date = return_year(date->data)) )
+					fprintf(ofile, " <b>d.</b>%4.4d", d_date);
+				else
+					fprintf(ofile, " <b>d.</b>%s", date->data);
+			}
     }
     else {
       fprintf(ofile, "%sName Withheld at the persons request", prefix);
