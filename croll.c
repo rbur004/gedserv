@@ -1059,7 +1059,9 @@ ged_type *adop;
 ged_type *afamc;
 char buff[128];
 int mcount;
-
+time_t t = time(0);  // Current time
+int year = 1900 + localtime(&t)->tm_year; // Current year
+int dead = 0;
 
   if((resn = find_type(indi, RESN)) && strcmp(resn->data, PRIVACY) == 0)
   {
@@ -1116,11 +1118,21 @@ int mcount;
         source_given(fp, name);
       }
 
+      deat = find_type(indi, DEAT);
+      buri = find_type(indi, BURI);
+      crem = find_type(indi, CREM);
+      dead = deat || buri || crem ;
+
       if( (birt = find_type(indi, BIRT)) )
       {
         fprintf(fp, "<dd><b>b.</b>");
         if( (date = find_type(birt, DATE)) )
-          fprintf(fp, " %s", date->data);
+        { int b_date = 0;
+          if( !dead && (b_date = return_year(date->data)) && b_date != 0 && (year - b_date) <=  100 )
+            fprintf(fp, " %4.4d", b_date);
+          else
+            fprintf(fp, " %s", date->data);
+        }
         if( (plac = find_type(birt, PLAC)) )
           fprintf(fp, " <b>at</b> %s", plac->data);
         source_given(fp, birt);
@@ -1130,13 +1142,18 @@ int mcount;
       {
         fprintf(fp, "<dd><b>c.</b>");
         if( (date = find_type(chr, DATE)) )
-          fprintf(fp, " %s", date->data);
+        { int c_date = 0;
+          if( !dead && (c_date = return_year(date->data)) && c_date != 0 && (year - c_date) <=  100 )
+            fprintf(fp, " %4.4d", c_date);
+          else
+            fprintf(fp, " %s", date->data);
+        }
         if( (plac = find_type(chr, PLAC)) )
           fprintf(fp, " <b>at</b> %s", plac->data);
         source_given(fp, chr);
         dump_notes(fp, chr, 1 );
       }
-      if( (deat = find_type(indi, DEAT)) )
+      if(deat)
       {
         fprintf(fp, "<dd><b>d.</b>");
         if( (date = find_type(deat, DATE)) )
@@ -1147,7 +1164,7 @@ int mcount;
         dump_notes(fp, deat, 1);
       }
 
-      if( (buri = find_type(indi, BURI)) )
+      if(buri)
       {
         fprintf(fp, "<dd><b>Buried.</b>");
         if( (date = find_type(buri, DATE)) )
@@ -1158,7 +1175,7 @@ int mcount;
         dump_notes(fp, buri, 1);
       }
 
-      if( (crem = find_type(indi, CREM)) )
+      if(crem)
       {
         fprintf(fp, "<dd><b>Cremated.</b>");
         if( (date = find_type(crem, DATE)) )
