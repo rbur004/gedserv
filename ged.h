@@ -11,7 +11,7 @@ typedef struct rel_list_struct
 	struct rel_list_struct *next;
 	struct ged_record *rt;
 	struct ged_record *srt;
-	int level;  //when used as a link to the previous child this has the generation 
+	int level;  //when used as a link to the previous child this has the generation
 				//of the current node through this child
 	int direct;
 } rel_list_type;
@@ -34,7 +34,7 @@ struct ged_record
 
 	struct ged_record *next_sorted; //Next Level 0 record of this type
 	struct ged_record *last_sorted; //Last Level 0 record of this type
-	
+
 	//The next two are used to help find how two individuals are related.
 	rel_list_type *rel_child_1; //Keeps track of child we came to this node through.
 	rel_list_type *rel_child_2; //We need to also track path from second start point.
@@ -70,7 +70,7 @@ extern ged_type all;   		//Head of all level 0 data entered
 
 #endif
 
-typedef struct 
+typedef struct
 {
 	char *type;
 	int	 Value;
@@ -114,7 +114,7 @@ typedef struct
 #define CONT	37
 #define RESN	38
 #define CONC	39
-#define CHR	    40
+#define CHR	  40
 #define WILL	41
 #define ADOP	42
 #define CREM  43
@@ -167,7 +167,7 @@ typemap_t typemap[] =
 	"WILL",	    WILL    ,
 	"ADOP",     ADOP    ,
 	"CREM",     CREM    ,
-	 (char *)0, 0 	
+	 (char *)0, 0
 };
 
 
@@ -179,4 +179,3 @@ extern typemap_t typemap[];
 
 
 #endif
-
