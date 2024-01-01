@@ -1,6 +1,7 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define GED_DUMP_C
 
@@ -8,6 +9,7 @@
 #include "croll.h"
 #include "ged_dump.h"
 #include "stringfunc.h"
+#include "date.h"
 
 void Family_GED_dump(FILE *fp, ged_type *g)
 {
@@ -21,6 +23,8 @@ char buff[64];
 char buff2[64];
 int type;
 int privacy = 0;
+time_t t = time(0);  // Current time
+int year = 1900 + localtime(&t)->tm_year; // Current year
 
 	strip_ats(buff2,g->data);
 	fprintf(fp, "<HTML>\n<HEAD><TITLE>%s</TITLE>\n<NAME=\"FamWindow\">\n<META NAME=\"ROBOTS\" CONTENT=\"noindex, nofollow, noarchive\">\n</HTML>\n<BODY>\n", buff2);
@@ -78,7 +82,16 @@ int privacy = 0;
       fprintf(fp, "<br>\n");
     }
     else if(!(resn && strcmp(resn->data, PRIVACY) == 0))
-      fprintf(fp,"%d <b>%s</b> %s<br>\n", g->level, g->type, g->data);
+		{ int e_date = 0;
+			if( type_to_num(g->type) == DATE ) {
+				if( (e_date = return_year(g->data)) && e_date != 0 && (year - e_date) <=  100 )
+					fprintf(fp, "%d <b>%s</b> %4.4d<br>\n", g->level, g->type, e_date);
+				else
+					fprintf(fp, "%d <b>%s</b> %s<br>\n", g->level, g->type, g->data);
+			}
+			else
+      	fprintf(fp,"%d <b>%s</b> %s<br>\n", g->level, g->type, g->data);
+		}
 	}
 
 	fprintf(fp,"<p><b>Go to the Tree's </b><A HREF=\"https://www.burrowes.org/FamilyTree/\"  ><b>Entry Page</b></A>.<br>\n");
