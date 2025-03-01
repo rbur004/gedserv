@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <syslog.h>
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <sys/socket.h>
@@ -159,11 +159,9 @@ int main_loop() {
         fflush(stdout);
 #endif
         if (((p = strrchr(buf, '\n')) && p != buf &&
-             (*(p - 1) == '\n' ||
-              (*(p - 1) == '\r' && p != &buf[1] && *(p - 2) == '\n'))) ||
+             (*(p - 1) == '\n' || (*(p - 1) == '\r' && p != &buf[1] && *(p - 2) == '\n'))) ||
             ((p = strrchr(buf, '\r')) && p != buf &&
-             (*(p - 1) == '\r' ||
-              (*(p - 1) == '\n' && p != &buf[1] && *(p - 2) == '\r')))) {
+             (*(p - 1) == '\r' || (*(p - 1) == '\n' && p != &buf[1] && *(p - 2) == '\r')))) {
           Parse_and_send_response(sd, buf);
           break;
         }
@@ -392,7 +390,7 @@ void send_url(int sd, char *url, int headeronly) {
           if (*(p + 1) && *(p + 2)) {
             sscanf(p + 1, "%x", &c);
             *p = (char)c;
-            strcpy(p + 1, p + 3);
+            strncpy(p + 1, p + 3, 32);
           } else
             *p = '\0';
         }
@@ -656,13 +654,17 @@ void send_url(int sd, char *url, int headeronly) {
 }
 
 void Parse_and_send_response(int sd, char *buf) {
-  char url[LINE_LIMIT];
+  char url[URL_LIMIT];
 
   if (buf == 0) {
     send_error(sd, 400);
     return;
   }
 
+  // syslog(LOG_INFO, "Incoming URL '%s'", buf);
+
+  // strtok tokenizes, then returns the next token if passed a null buffer.
+  // URL is preparsed, replacing ' ' with '.' to ensure the 2nd token is complete.
   switch (token_to_num(Commands, strtok(buf, " \t"))) {
   case GET:
     send_url(sd, strtok(0, " \t"), 0);

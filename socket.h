@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #define TIME_LENGTH 32
+#define URL_LIMIT 1024
 
 int main_loop();
 void send_error(int sd, int error);

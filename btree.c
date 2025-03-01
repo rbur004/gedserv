@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <syslog.h>
 #define __USE_GNU
 #include <string.h>
 
@@ -322,16 +323,17 @@ void dump_by_match(FILE *fp, char *match_me) {
   if (*match_me == '\0')
     return;
 
+  // syslog(LOG_INFO, "dump_by_match( '%s' )", match_me);
+
   if ((node = malloc(sizeof(tree_data))) == NULL) {
     printf("create_index: Couldn't alloc a node\n");
     return;
   }
 
-  fprintf(
-      fp,
-      "<HTML>\n<HEAD><TITLE>Match of %s</TITLE>\n<NAME=\"IndexWindow\">\n<META "
-      "NAME=\"ROBOTS\" CONTENT=\"INDEX, "
-      "NOFOLLOW\">\n</HEAD>\n<BODY><H2>Surname Index</H2>\n",
+  fprintf( fp,
+      "<HTML>\n<HEAD><TITLE>Match of %s</TITLE>\n<NAME=\"IndexWindow\">\n"
+      "<META NAME=\"ROBOTS\" CONTENT=\"INDEX, NOFOLLOW\">\n"
+      "</HEAD>\n<BODY><H2>Surname Index</H2>\n",
       match_me);
 
   output_form(fp);
@@ -352,8 +354,7 @@ void dump_by_match(FILE *fp, char *match_me) {
               ">?</A> <b>No Surname INDEX</b><p>\n");
   fprintf(fp, "<p>\n<pre><KBD>\n");
 
-  for (g = head_INDI.next_this_type; g != &head_INDI;
-       g = g->next_this_type) // for each INDI record
+  for (g = head_INDI.next_this_type; g != &head_INDI; g = g->next_this_type) // for each INDI record
   {
     if ((name = find_type(g, NAME))) {
       do // Add under all names person has gone by.
@@ -365,10 +366,7 @@ void dump_by_match(FILE *fp, char *match_me) {
 
         if (strcasestr(surname, match_me) || strcasestr(firstnames, match_me)) {
           strip_ats(indi_reference, g->data); // This individuals reference
-          fprintf(fp,
-                  "%-16.16s <A href=\"/ruby/gedrelay.rbx?type=html&target=%s\" "
-                  " >%-24.24s</a>",
-                  surname, indi_reference, firstnames);
+          fprintf(fp, "%-16.16s <A href=\"/ruby/gedrelay.rbx?type=html&target=%s\"  >%-24.24s</a>", surname, indi_reference, firstnames);
 
           // find birth record, or christening if no birth record
           if ((birt = find_type(g, BIRT)) && (date = find_type(birt, DATE))) {
@@ -397,24 +395,13 @@ void dump_by_match(FILE *fp, char *match_me) {
           // Find Parent family
           if ((famc = find_type(g, FAMC))) {
             strip_ats(fam_reference, famc->data);
-            fprintf(fp,
-                    " <A href=\"/ruby/gedrelay.rbx?type=html&target=%s#%s\"  "
-                    "><b>Parents.</b></A>",
-                    fam_reference, indi_reference);
+            fprintf(fp, " <A href=\"/ruby/gedrelay.rbx?type=html&target=%s#%s\"  ><b>Parents.</b></A>",fam_reference, indi_reference);
           } else
             fprintf(fp, " <b>        </b>");
 
           // Add Ancestor and Descendant links.
-          fprintf(fp,
-                  " <a "
-                  "href=\"/ruby/"
-                  "gedrelay.rbx?type=TA&depth=2&target=%s\"><b>Anc.</b></a>",
-                  indi_reference);
-          fprintf(fp,
-                  " <a "
-                  "href=\"/ruby/gedrelay.rbx?type=TD&depth=2&target/"
-                  "%s\"><b>Des.</b></a>",
-                  indi_reference);
+          fprintf(fp, " <A href=\"/ruby/gedrelay.rbx?type=TA&depth=2&target=%s\"><b>Anc.</b></a>", indi_reference);
+          fprintf(fp," <A href=\"/ruby/gedrelay.rbx?type=TD&depth=2&target/%s\"><b>Des.</b></a>", indi_reference);
 
           // Find marriages
           if ((fams = find_type(g, FAMS))) {
@@ -424,28 +411,19 @@ void dump_by_match(FILE *fp, char *match_me) {
                               ? name->data
                               : "";
             strip_ats(fam_reference, fams->data);
-            fprintf(fp,
-                    " <A "
-                    "href=\"/ruby/gedrelay.rbx?type=html&target=%s\"><b>M%d.</"
-                    "b></A> %s",
-                    fam_reference, mcount++, spouse_name);
+            fprintf(fp, " <A href=\"/ruby/gedrelay.rbx?type=html&target=%s\"><b>M%d.</b></A> %s", fam_reference, mcount++, spouse_name);
             while ((fams = find_next_this_type(g, fams))) {
               spouse_name = ((spouse = find_spouse(fams, indi_reference)) &&
                              (name = find_type(spouse, NAME)))
                                 ? name->data
                                 : "";
               strip_ats(fam_reference, fams->data);
-              fprintf(fp,
-                      " <A "
-                      "href=\"/ruby/"
-                      "gedrelay.rbx?type=html&target=%s\"><b>M%d.</b></A> %s",
-                      fam_reference, mcount++, spouse_name);
+              fprintf(fp, " <A href=\"/ruby/gedrelay.rbx?type=html&target=%s\"><b>M%d.</b></A> %s", fam_reference, mcount++, spouse_name);
             }
           }
 
           fprintf(fp, "\n");
         }
-
       } while ((name = find_next_this_type(g, name)));
     }
   }

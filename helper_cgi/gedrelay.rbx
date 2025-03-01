@@ -34,11 +34,11 @@ second_target = record2 if second_target.nil? || second_target == ''
          when 'ged' then "/ged/#{target}"
          when 'search'
            if surname_target != nil && surname_target != ''
-             "/search?Surname=#{surname_target}"
+             "/search?Surname=#{surname_target.gsub(/ /,'.')}"
            elsif firstname_target != nil && firstname_target != ''
-             "/search?Firstname=#{firstname_target}"
+             "/search?Firstname=#{firstname_target.gsub(/ /,'.')}"
            elsif match_target != nil && match_target != ''
-             "/search?Match=#{match_target}"
+             "/search?Match=#{match_target.gsub(/ /,'.')}"
            else
              '/index/index_A'
            end

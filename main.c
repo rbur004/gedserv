@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "socket.h"
+#include <syslog.h>
 
+#include "socket.h"
 #include "pathnames.h"
 #include "croll.h"
 #include "btree.h"
@@ -14,8 +15,12 @@ int main(int argc, char **argv) {
   if (argc == 1)
     exit(0);
 
-  if ((Ged_File = (t_gedfile *)calloc(argc, sizeof(t_gedfile))) == NULL)
+  openlog("Gedserv", LOG_PID, LOG_USER);
+
+  if ((Ged_File = (t_gedfile *)calloc(argc, sizeof(t_gedfile))) == NULL) {
+    syslog(LOG_ERR, "Ged_File calloc failed");
     exit(1);
+  }
 
   for (i = 1; i < argc; i++) {
     Ged_File[i - 1].name = argv[i];
@@ -29,5 +34,6 @@ int main(int argc, char **argv) {
   display_stats();
   main_loop();
 
+  closelog();
   return 0;
 }
