@@ -3,38 +3,37 @@
 
 #ifdef DATE_C
 
-char *months[] =
-{
-"jan",	"feb",	"mar", 	"apr", 	"may",	"jun",	"jul",	"aug",	"sep", "oct", "nov", "dec"
-};
+#define ARGLIST_LEN 32
+#define DATE_BUFF_LEN 1024
+
+char *months[] = {"jan", "feb", "mar", "apr", "may", "jun",
+                  "jul", "aug", "sep", "oct", "nov", "dec"};
 
 #define MONTHS_SIZE 12
 #define NMONTHS 12
 
-int month_lengths[] =
-{
-31,		28,		31,		30,		31,		30,		31,		31,		30,		31,		30,	 	31
-};
+int month_lengths[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-char *Calendar_Escape_Sequence[] =
-{ "@#DHEBREW@", "@#DROMAN@", "@#DFRENCH R@", "@#DGREGORIAN@", "@#DJULIAN@", "@#DUNKNOWN@" };
+char *Calendar_Escape_Sequence[] = {"@#DHEBREW@",   "@#DROMAN@",
+                                    "@#DFRENCH R@", "@#DGREGORIAN@",
+                                    "@#DJULIAN@",   "@#DUNKNOWN@"};
 
 #define CALENDAR_ESCAPE_SEQUENCE_SIZE 6
 
-//    Qualifies the meaning of a date.
+//    Qualifies the meaning of a date.
 //       ABT = About
 //       AFT = After
 //       BEF = Before
 //       EST = Estimated
-char *Date_Modifier[] = { "ABT" , "AFT" , "BEF", "EST"};
+char *Date_Modifier[] = {"ABT", "AFT", "BEF", "EST"};
 
 #define DATE_MODIFIER_SIZE 4
 
-char *Date_Range[] = { "BET", "AND" };
+char *Date_Range[] = {"BET", "AND"};
 
 #define DATE_RANGE_SIZE 2
 
-char *Date_With_BC[] = { "BC", "AD" };
+char *Date_With_BC[] = {"BC", "AD"};
 
 #define DATE_WITH_BC_SIZE 2
 
